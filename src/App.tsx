@@ -16,6 +16,7 @@ import SettingsSelect from './components/SettingsSelect'
 import Dashboard from './pages/Dashboard'
 import Courses from './pages/Courses'
 import Files from './pages/Files'
+import ProfilePage from './pages/Profile'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -882,70 +883,18 @@ function App() {
         )}
 
         {activeSection === 'profile' && (
-          <section className="content-section profile-section" aria-labelledby="profile-title">
-            <div className="section-heading">
-              <div>
-                <p className="section-kicker">{text.yourStory}</p>
-                <h2 id="profile-title">{text.profile}</h2>
-              </div>
-            </div>
-
-            <div className="profile-card">
-              <div className="profile-header">
-                <div className="profile-avatar">
-                  {profile.photo
-                    ? <img src={profile.photo} alt={`${username}'s profile`} />
-                    : <span aria-hidden="true">{username.charAt(0)}</span>}
-                </div>
-                <div className="profile-identity">
-                  <h3>{username}</h3>
-                  <p>{text.student}</p>
-                  <div className="profile-photo-actions">
-                    <button
-                      className="primary-button"
-                      type="button"
-                      onClick={() => profilePhotoInputRef.current?.click()}
-                    >
-                      {profile.photo ? text.changePhoto : text.addPhoto}
-                    </button>
-                    {profile.photo && (
-                      <button
-                        className="text-button"
-                        type="button"
-                        onClick={() => {
-                          updateProfile({ photo: '' })
-                          setStatus('Profile photo removed.')
-                        }}
-                      >
-                        {text.removePhoto}
-                      </button>
-                    )}
-                    <input
-                      ref={profilePhotoInputRef}
-                      className="visually-hidden"
-                      type="file"
-                      accept="image/*"
-                      aria-label="Choose a profile photo"
-                      onChange={handleProfilePhotoChange}
-                    />
-                  </div>
-                  <small className="profile-help">{text.imageHelp}</small>
-                </div>
-              </div>
-
-              <label className="profile-bio-field">
-                {text.bio}
-                <textarea
-                  value={profile.bio}
-                  maxLength={300}
-                  rows={4}
-                  placeholder={text.tellAboutYourself}
-                  onChange={(event) => updateProfile({ bio: event.target.value })}
-                />
-                <span>{profile.bio.length}/300 characters</span>
-              </label>
-            </div>
-          </section>
+          <ProfilePage
+            text={text}
+            username={username}
+            profile={profile}
+            profilePhotoInputRef={profilePhotoInputRef}
+            onPhotoChange={handleProfilePhotoChange}
+            onUpdateProfile={updateProfile}
+            onRemovePhoto={() => {
+              updateProfile({ photo: '' })
+              setStatus('Profile photo removed.')
+            }}
+          />
         )}
 
         {activeSection === 'settings' && (
