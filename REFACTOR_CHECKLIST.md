@@ -1,0 +1,23 @@
+# Refactor Manual Checks
+
+- [ ] Dashboard page
+- [ ] Courses page
+- [ ] Files page
+- [ ] Profile page
+- [ ] Ask Axi page
+- [ ] Settings page
+- [ ] Ember theme
+- [ ] Ocean theme
+- [ ] Forest theme
+- [ ] Light theme
+- [ ] English language
+- [ ] French language
+- [ ] Arabic language and RTL layout
+- [ ] Mobile width at or below 580px
+- [ ] Mobile width at or below 760px
+- [ ] Mobile width at or below 1000px
+- [ ] Upload and delete a file
+- [ ] Add and remove a course
+- [ ] Rename and delete a chat
+- [ ] Chat settings modal
+- [ ] Storage report modal
