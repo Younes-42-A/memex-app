@@ -13,6 +13,7 @@ import ChatSettingsModal, { type ChatSettings } from './components/ChatSettingsM
 import ChatSidebarWithHistory, { type ChatSession } from './components/ChatSidebarWithHistory'
 import AskSelect from './components/AskSelect'
 import SettingsSelect from './components/SettingsSelect'
+import Dashboard from './pages/Dashboard'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -674,70 +675,20 @@ function App() {
         </header>
 
         {activeSection === 'dashboard' && (
-        <>
-        <section className="welcome-section" aria-labelledby="welcome-title">
-          <div>
-            <p className="eyebrow">{now.toLocaleDateString(preferences.language, { dateStyle: 'full' })}</p>
-            <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">✦</span></h1>
-            <p className="welcome-copy">{text.buildSpace}</p>
-          </div>
-        </section>
-
-        <section className="stats-grid" aria-label={text.summary}>
-          <a className="stat-card stat-card-link" href="#courses" aria-label={`${text.courses}: ${courses.length}`}>
-            <span className="stat-icon icon-blue" aria-hidden="true">▦</span>
-            <div>
-              <p>{text.courses}</p>
-              <strong>{courses.length}</strong>
-              <small>{text.courseCount}</small>
-            </div>
-          </a>
-          <a className="stat-card stat-card-link" href="#files" aria-label={`${text.studyFiles}: ${visibleFiles.length}`}>
-            <span className="stat-icon icon-orange" aria-hidden="true">▤</span>
-            <div>
-              <p>{text.studyFiles}</p>
-              <strong>{visibleFiles.length}</strong>
-              <small>{selectedCourseCode ? text.filesInSelectedCourse : text.filesAdded}</small>
-            </div>
-          </a>
-          <article className="stat-card">
-            <span className="stat-icon icon-green" aria-hidden="true">▣</span>
-            <div className="storage-stat-content">
-              <p>{text.storage}</p>
-              <strong>{formatSize(storageUsed)}</strong>
-              <small>{formatSize(storageRemaining)} available of 5 GB</small>
-              <div
-                className="storage-progress"
-                role="progressbar"
-                aria-label="Storage used"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(storagePercent)}
-              >
-                <span style={{ width: `${storagePercent}%` }} />
-              </div>
-            </div>
-          </article>
-        </section>
-        <section className="dashboard-shortcuts" aria-label={text.workspacePages}>
-          <a className="shortcut-card" href="#courses">
-            <span className="shortcut-icon" aria-hidden="true">▦</span>
-            <span>
-              <strong>{text.manageCourses}</strong>
-              <small>{courses.length} {courses.length === 1 ? 'course' : 'courses'} in your workspace</small>
-            </span>
-            <span className="shortcut-arrow" aria-hidden="true">→</span>
-          </a>
-          <a className="shortcut-card" href="#files">
-            <span className="shortcut-icon" aria-hidden="true">▤</span>
-            <span>
-              <strong>{text.manageFiles}</strong>
-              <small>{files.length} {files.length === 1 ? 'file' : 'files'} in your workspace</small>
-            </span>
-            <span className="shortcut-arrow" aria-hidden="true">→</span>
-          </a>
-        </section>
-        </>
+          <Dashboard
+            text={text}
+            language={preferences.language}
+            now={now}
+            greeting={getGreeting(now, preferences.language)}
+            username={username}
+            courses={courses.length}
+            files={files.length}
+            visibleFiles={visibleFiles.length}
+            selectedCourseCode={selectedCourseCode}
+            storageUsed={formatSize(storageUsed)}
+            storageRemaining={formatSize(storageRemaining)}
+            storagePercent={storagePercent}
+          />
         )}
 
         {activeSection === 'ask-axi' && (
