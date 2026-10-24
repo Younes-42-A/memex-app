@@ -12,11 +12,11 @@ import type { StoredFile } from './workspaceStorage'
 import ChatSettingsModal, { type ChatSettings } from './components/ChatSettingsModal'
 import ChatSidebarWithHistory, { type ChatSession } from './components/ChatSidebarWithHistory'
 import AskSelect from './components/AskSelect'
-import SettingsSelect from './components/SettingsSelect'
 import Dashboard from './pages/Dashboard'
 import Courses from './pages/Courses'
 import Files from './pages/Files'
 import ProfilePage from './pages/Profile'
+import Settings from './pages/Settings'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -39,10 +39,6 @@ const emptyCourseForm: CourseForm = { code: '', title: '', instructor: '' }
 const courseColors: Course['color'][] = ['blue', 'purple', 'green']
 const username = 'Younes'
 const storageLimit = 5 * 1024 ** 3
-
-function toHomePage(value: string): HomePage {
-  return value === 'ask-axi' ? value : 'dashboard'
-}
 
 function toAnswerStyle(value: string): AnswerStyle {
   return value === 'concise' || value === 'step-by-step' ? value : 'balanced'
@@ -267,6 +263,20 @@ function App() {
       setStatus(interfaceText[nextPreferences.language].preferencesSaved)
     } catch {
       setStatus(interfaceText[nextPreferences.language].preferencesSaveFailed)
+    }
+  }
+
+  function resetSettings() {
+    if (!window.confirm(`${text.resetSettings}?`)) return
+    setPreferences(defaultPreferences)
+    setAnswerStyle(defaultPreferences.defaultAnswerStyle)
+    setAskCourseCode(defaultPreferences.defaultCourseCode)
+    setAskFileId('')
+    try {
+      window.localStorage.setItem('memex-settings', JSON.stringify(defaultPreferences))
+      setStatus('Settings restored to defaults.')
+    } catch {
+      setStatus('Settings were reset, but could not be saved in this browser.')
     }
   }
 
@@ -898,260 +908,29 @@ function App() {
         )}
 
         {activeSection === 'settings' && (
-          <section className="settings-page" aria-labelledby="settings-title">
-            <div className="settings-heading">
-              <p className="section-kicker">{text.settingsKicker}</p>
-              <h1 id="settings-title">{text.settings}</h1>
-              <p>{text.settingsIntro}</p>
-            </div>
-
-            <div className="settings-layout">
-              <nav className="settings-navigation" aria-label={text.settings}>
-                <p className="settings-nav-caption">{text.account}</p>
-                <button className={`settings-nav-item${settingsSection === 'account' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('account')}>
-                  <span aria-hidden="true">♙</span>{text.account}
-                </button>
-                <button className={`settings-nav-item${settingsSection === 'appearance' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('appearance')}>
-                  <span aria-hidden="true">◐</span>{text.appearance}
-                </button>
-                <button className={`settings-nav-item${settingsSection === 'accessibility' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('accessibility')}>
-                  <span aria-hidden="true">♿</span>{text.accessibility}
-                </button>
-                <button className={`settings-nav-item${settingsSection === 'notifications' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('notifications')}>
-                  <span aria-hidden="true">♧</span>{text.notifications}
-                </button>
-                <p className="settings-nav-caption">{text.study}</p>
-                <button className={`settings-nav-item${settingsSection === 'study' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('study')}>
-                  <span aria-hidden="true">✦</span>{text.assistant}
-                </button>
-                <p className="settings-nav-caption">{text.data}</p>
-                <button className={`settings-nav-item${settingsSection === 'data' ? ' active' : ''}`} type="button" onClick={() => setSettingsSection('data')}>
-                  <span aria-hidden="true">▣</span>{text.data}
-                </button>
-              </nav>
-
-              <div className="settings-panel">
-                {settingsSection === 'account' && (
-                  <section className="settings-card" aria-labelledby="settings-account-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">♙</span>
-                      <div>
-                        <h2 id="settings-account-title">{text.account}</h2>
-                        <p>{text.localAccountHelp}</p>
-                      </div>
-                    </header>
-                    <div className="settings-action-row">
-                      <span>
-                        <strong>{username}</strong>
-                        <small>{text.localAccount}</small>
-                      </span>
-                      <a className="settings-action" href="#profile">{text.editProfile} <span aria-hidden="true">→</span></a>
-                    </div>
-                    <label className="settings-field">
-                      <span>
-                        <strong>{text.startPage}</strong>
-                        <small>{text.startPageHelp}</small>
-                      </span>
-                      <SettingsSelect
-                        label={text.startPage}
-                        value={preferences.homePage}
-                        options={[
-                          { value: 'dashboard', label: text.overview },
-                          { value: 'ask-axi', label: text.askAxi },
-                        ]}
-                        onChange={(value) => updatePreferences({ homePage: toHomePage(value) })}
-                      />
-                    </label>
-                  </section>
-                )}
-
-                {settingsSection === 'appearance' && (
-                  <section className="settings-card" aria-labelledby="settings-appearance-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">◐</span>
-                      <div>
-                        <h2 id="settings-appearance-title">{text.appearance}</h2>
-                        <p>{text.savedOnDevice}</p>
-                      </div>
-                    </header>
-                    <label className="settings-field">
-                      <span>
-                        <strong>{text.language}</strong>
-                        <small>{text.languageHelp}</small>
-                      </span>
-                      <SettingsSelect
-                        label={text.language}
-                        value={preferences.language}
-                        options={[
-                          { value: 'en', label: 'English' },
-                          { value: 'fr', label: 'Français' },
-                          { value: 'ar', label: 'العربية' },
-                        ]}
-                        onChange={(value) => updatePreferences({
-                          language: value === 'fr' || value === 'ar' ? value : 'en',
-                        })}
-                      />
-                    </label>
-                    <label className="settings-field">
-                      <span>
-                        <strong>{text.theme}</strong>
-                        <small>{text.themeHelp}</small>
-                      </span>
-                      <SettingsSelect
-                        label={text.theme}
-                        value={preferences.theme}
-                        options={[
-                          { value: 'ember', label: text.emberTheme, swatch: '#fb7a24' },
-                          { value: 'ocean', label: text.oceanTheme, swatch: '#38a6e8' },
-                          { value: 'forest', label: text.forestTheme, swatch: '#57b77a' },
-                          { value: 'light', label: text.lightTheme, swatch: '#7560d6' },
-                        ]}
-                        onChange={(value) => updatePreferences({
-                          theme: value === 'ocean' || value === 'forest' || value === 'light' ? value : 'ember',
-                        })}
-                      />
-                    </label>
-                    <label className="settings-field">
-                      <span>
-                        <strong>{text.density}</strong>
-                        <small>{text.densityHelp}</small>
-                      </span>
-                      <SettingsSelect
-                        label={text.density}
-                        value={preferences.density}
-                        options={[
-                          { value: 'comfortable', label: text.comfortable },
-                          { value: 'compact', label: text.compact },
-                        ]}
-                        onChange={(value) => updatePreferences({
-                          density: value === 'compact' ? 'compact' : 'comfortable',
-                        })}
-                      />
-                    </label>
-                  </section>
-                )}
-
-                {settingsSection === 'accessibility' && (
-                  <section className="settings-card" aria-labelledby="settings-accessibility-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">♿</span>
-                      <div>
-                        <h2 id="settings-accessibility-title">{text.accessibility}</h2>
-                        <p>{text.reduceMotionHelp}</p>
-                      </div>
-                    </header>
-                    <label className="settings-toggle-row">
-                      <span><strong>{text.reduceMotion}</strong><small>{text.reduceMotionHelp}</small></span>
-                      <input type="checkbox" checked={preferences.reduceMotion} onChange={(event) => updatePreferences({ reduceMotion: event.target.checked })} />
-                    </label>
-                  </section>
-                )}
-
-                {settingsSection === 'notifications' && (
-                  <section className="settings-card" aria-labelledby="settings-notifications-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">♧</span>
-                      <div>
-                        <h2 id="settings-notifications-title">{text.notifications}</h2>
-                        <p>{text.inAppNotificationsHelp}</p>
-                      </div>
-                    </header>
-                    <label className="settings-toggle-row">
-                      <span><strong>{text.inAppNotifications}</strong><small>{text.inAppNotificationsHelp}</small></span>
-                      <input type="checkbox" checked={preferences.showNotifications} onChange={(event) => updatePreferences({ showNotifications: event.target.checked })} />
-                    </label>
-                    <label className="settings-toggle-row">
-                      <span><strong>{text.confirmCourseRemoval}</strong><small>{text.confirmCourseRemovalHelp}</small></span>
-                      <input type="checkbox" checked={preferences.confirmCourseRemoval} onChange={(event) => updatePreferences({ confirmCourseRemoval: event.target.checked })} />
-                    </label>
-                  </section>
-                )}
-
-                {settingsSection === 'study' && (
-                  <section className="settings-card" aria-labelledby="settings-study-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">✦</span>
-                      <div>
-                        <h2 id="settings-study-title">{text.assistant}</h2>
-                        <p>{text.defaultStyleHelp}</p>
-                      </div>
-                    </header>
-                    <label className="settings-field">
-                      <span><strong>{text.defaultStyle}</strong><small>{text.defaultStyleHelp}</small></span>
-                      <SettingsSelect
-                        label={text.defaultStyle}
-                        value={preferences.defaultAnswerStyle}
-                        options={[
-                          { value: 'balanced', label: text.balanced },
-                          { value: 'concise', label: text.concise },
-                          { value: 'step-by-step', label: text.stepByStep },
-                        ]}
-                        onChange={(value) => {
-                          const nextStyle = toAnswerStyle(value)
-                          updatePreferences({ defaultAnswerStyle: nextStyle })
-                          setAnswerStyle(nextStyle)
-                        }}
-                      />
-                    </label>
-                    <label className="settings-field">
-                      <span><strong>{text.defaultCourse}</strong><small>{text.defaultCourseHelp}</small></span>
-                      <SettingsSelect
-                        label={text.defaultCourse}
-                        value={preferences.defaultCourseCode}
-                        options={[
-                          { value: '', label: text.allCourses },
-                          ...courses.map((course) => ({ value: course.code, label: `${course.code} · ${course.title}` })),
-                        ]}
-                        onChange={(value) => {
-                          updatePreferences({ defaultCourseCode: value })
-                          setAskCourseCode(value)
-                          setAskFileId('')
-                        }}
-                      />
-                    </label>
-                  </section>
-                )}
-
-                {settingsSection === 'data' && (
-                  <section className="settings-card" aria-labelledby="settings-data-title">
-                    <header className="settings-card-heading">
-                      <span className="settings-card-icon" aria-hidden="true">▣</span>
-                      <div>
-                        <h2 id="settings-data-title">{text.data}</h2>
-                        <p>{text.localAccountHelp}</p>
-                      </div>
-                    </header>
-                    <div className="settings-action-row">
-                      <span><strong>{text.data}</strong><small>{formatSize(storageUsed)} used · {formatSize(storageRemaining)} available</small></span>
-                      <button className="settings-action" type="button" onClick={() => setStorageReportOpen(true)}>View storage <span aria-hidden="true">→</span></button>
-                    </div>
-                    <div className="settings-action-row">
-                      <span><strong>{text.resetSettings}</strong><small>{text.resetSettingsHelp}</small></span>
-                      <button
-                        className="settings-action"
-                        type="button"
-                        onClick={() => {
-                          if (!window.confirm(`${text.resetSettings}?`)) return
-                          setPreferences(defaultPreferences)
-                          setAnswerStyle(defaultPreferences.defaultAnswerStyle)
-                          setAskCourseCode(defaultPreferences.defaultCourseCode)
-                          setAskFileId('')
-                          try {
-                            window.localStorage.setItem('memex-settings', JSON.stringify(defaultPreferences))
-                            setStatus('Settings restored to defaults.')
-                          } catch {
-                            setStatus('Settings were reset, but could not be saved in this browser.')
-                          }
-                        }}
-                      >
-                        {text.reset}
-                      </button>
-                    </div>
-                  </section>
-                )}
-              </div>
-            </div>
-          </section>
+          <Settings
+            text={text}
+            username={username}
+            preferences={preferences}
+            settingsSection={settingsSection}
+            courses={courses}
+            storageUsed={formatSize(storageUsed)}
+            storageRemaining={formatSize(storageRemaining)}
+            onSectionChange={setSettingsSection}
+            onPreferencesChange={updatePreferences}
+            onAnswerStyleChange={(value) => {
+              const nextStyle = toAnswerStyle(value)
+              updatePreferences({ defaultAnswerStyle: nextStyle })
+              setAnswerStyle(nextStyle)
+            }}
+            onDefaultCourseChange={(value) => {
+              updatePreferences({ defaultCourseCode: value })
+              setAskCourseCode(value)
+              setAskFileId('')
+            }}
+            onOpenStorageReport={() => setStorageReportOpen(true)}
+            onResetSettings={resetSettings}
+          />
         )}
 
         {preferences.showNotifications && <p className="status-message" aria-live="polite">{status}</p>}
