@@ -14,6 +14,7 @@ import ChatSidebarWithHistory, { type ChatSession } from './components/ChatSideb
 import AskSelect from './components/AskSelect'
 import SettingsSelect from './components/SettingsSelect'
 import Dashboard from './pages/Dashboard'
+import Courses from './pages/Courses'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -840,100 +841,25 @@ function App() {
           </section>
         )}
 
-        {activeSection === 'courses' && <section className="content-section" aria-labelledby="courses-title">
-          <div className="section-heading">
-            <div>
-              <p className="section-kicker">{text.learningSpace}</p>
-              <h2 id="courses-title">{text.courses}</h2>
-            </div>
-            <button className="primary-button" type="button" disabled={!workspaceLoaded} onClick={() => setCourseFormOpen((open) => !open)}>
-              {!workspaceLoaded ? text.loading : courseFormOpen ? text.cancel : text.addCourse}
-            </button>
-          </div>
-
-          {courseFormOpen && (
-            <form className="course-form" onSubmit={handleAddCourse}>
-              <label>
-                {text.courseCode}
-                <input
-                  required
-                  value={courseForm.code}
-                  onChange={(event) => setCourseForm({ ...courseForm, code: event.target.value })}
-                  placeholder="e.g. CS 204"
-                />
-              </label>
-              <label>
-                {text.courseName}
-                <input
-                  required
-                  value={courseForm.title}
-                  onChange={(event) => setCourseForm({ ...courseForm, title: event.target.value })}
-                  placeholder="e.g. Data Structures"
-                />
-              </label>
-              <label>
-                {text.instructor}
-                <input
-                  value={courseForm.instructor}
-                  onChange={(event) => setCourseForm({ ...courseForm, instructor: event.target.value })}
-                  placeholder={text.optional}
-                />
-              </label>
-              <button className="primary-button" type="submit">{text.saveCourse}</button>
-            </form>
-          )}
-
-          {!workspaceLoaded ? (
-            <div className="empty-state"><strong>{text.loading}</strong></div>
-          ) : courses.length > 0 ? (
-            <div className="course-grid">
-              {courses.map((course) => {
-                const courseFileCount = files.filter((file) => file.courseCode === course.code).length
-                return (
-                  <article
-                    className={`course-card ${course.color}${selectedCourseCode === course.code ? ' selected' : ''}`}
-                    key={course.code}
-                  >
-                    <button
-                      className="course-card-select"
-                      type="button"
-                      aria-pressed={selectedCourseCode === course.code}
-                      aria-label={`${text.viewFiles}: ${course.title}`}
-                      onClick={() => {
-                        setSelectedCourseCode(course.code)
-                        window.location.hash = 'files'
-                      }}
-                    >
-                      <span className="course-card-top">
-                        <span className="course-code">{course.code}</span>
-                        <span className="course-symbol" aria-hidden="true">✳</span>
-                      </span>
-                      <span className="course-title">{course.title}</span>
-                      <span className="instructor">{course.instructor || text.optional}</span>
-                      <span className="course-card-bottom">
-                        <span>{courseFileCount} {courseFileCount === 1 ? 'file' : 'files'}</span>
-                        <span className="course-arrow" aria-hidden="true">→</span>
-                      </span>
-                    </button>
-                    <button
-                      className="remove-course-button"
-                      type="button"
-                      aria-label={`Remove ${course.title}`}
-                      onClick={() => handleRemoveCourse(course)}
-                    >
-                      {text.remove}
-                    </button>
-                  </article>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <strong>{text.noCourses}</strong>
-              <p>{text.addCourseHelp}</p>
-            </div>
-          )}
-        </section>}
+        {activeSection === 'courses' && (
+          <Courses
+            text={text}
+            courses={courses}
+            files={files}
+            selectedCourseCode={selectedCourseCode}
+            workspaceLoaded={workspaceLoaded}
+            courseFormOpen={courseFormOpen}
+            courseForm={courseForm}
+            onToggleForm={() => setCourseFormOpen((open) => !open)}
+            onCourseFormChange={(field, value) => setCourseForm({ ...courseForm, [field]: value })}
+            onSubmit={handleAddCourse}
+            onSelectCourse={(courseCode) => {
+              setSelectedCourseCode(courseCode)
+              window.location.hash = 'files'
+            }}
+            onRemoveCourse={handleRemoveCourse}
+          />
+        )}
 
         {activeSection === 'files' && <section className="content-section files-section" aria-labelledby="files-title">
           <div className="section-heading">
