@@ -6,7 +6,10 @@
     <title>Memex</title>
     <!-- استدعاء CSS الخاص بـ Select2 لتفعيل خانة البحث -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="src/styles/tokens.css" />
+    <link rel="stylesheet" href="src/styles/base.css" />
+    <link rel="stylesheet" href="src/styles/components.css" />
+    <link rel="stylesheet" href="login.css" />
 </head>
 <body>
     <main>
@@ -281,77 +284,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#country').select2({
-                placeholder: "Search country...",
-                allowClear: true
-            });
-        });
-
-        const authForm = document.querySelector("#auth-form");
-        const loginTitle = document.querySelector("#login-title");
-        const authSubtitle = document.querySelector("#auth-subtitle");
-        const submitButton = document.querySelector(".submit-button");
-        const authStatus = document.querySelector("#auth-status");
-        const confirmPassword = document.querySelector("#confirm-password");
-        const signupPassword = document.querySelector("#new-password");
-
-        document.querySelectorAll(".auth-mode-button").forEach((button) => {
-            button.addEventListener("click", () => {
-                const isSignUp = button.dataset.mode === "signup";
-
-                document.querySelectorAll(".auth-mode-button").forEach((modeButton) => {
-                    const isActive = modeButton === button;
-                    modeButton.classList.toggle("is-active", isActive);
-                    modeButton.setAttribute("aria-pressed", String(isActive));
-                });
-
-                document.querySelectorAll(".signup-field").forEach((field) => {
-                    field.hidden = !isSignUp;
-                    field.querySelectorAll("input, select").forEach((control) => {
-                        control.disabled = !isSignUp;
-                    });
-                });
-
-                document.querySelectorAll(".login-field").forEach((field) => {
-                    field.hidden = isSignUp;
-                    field.querySelectorAll("input, select").forEach((control) => {
-                        control.disabled = isSignUp;
-                    });
-                });
-
-                if (window.jQuery && $("#country").data("select2")) {
-                    $("#country").trigger("change.select2");
-                }
-
-                loginTitle.textContent = isSignUp ? "Create your account" : "Welcome back";
-                authSubtitle.textContent = isSignUp
-                    ? "Start building your personal knowledge space."
-                    : "Log in to continue to your personal knowledge space.";
-                submitButton.textContent = isSignUp ? "CREATE ACCOUNT" : "LOG IN";
-                authStatus.hidden = true;
-                authStatus.textContent = "";
-            });
-        });
-
-        const validatePasswordMatch = () => {
-            confirmPassword.setCustomValidity(
-                confirmPassword.value && confirmPassword.value !== signupPassword.value
-                    ? "Passwords do not match."
-                    : ""
-            );
-        };
-
-        signupPassword.addEventListener("input", validatePasswordMatch);
-        confirmPassword.addEventListener("input", validatePasswordMatch);
-
-        authForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            validatePasswordMatch();
-            authStatus.textContent = "Authentication is not connected yet. Your details have not been sent.";
-            authStatus.hidden = false;
-        });
-    </script>
+    <script src="login.js"></script>
 </body>
 </html>

@@ -3,6 +3,17 @@
   --bg: #0e0d0d;
   --bg-glow: rgba(120, 28, 20, 0.14);
   --bg-glow-size: 34%;
+  --login-page-glow: rgba(120, 28, 20, 0.2);
+  --login-placeholder: #9e8f89;
+  --login-note-text: #ffc08d;
+  --login-accent-hover: #e85d18;
+  --login-note-icon: #fb6d3b;
+  --login-highlight-start: #ef4444;
+  --login-highlight-end: #fb923c;
+  --login-button-hover-start: #c72e24;
+  --login-focus-outline: rgba(251, 122, 36, 0.28);
+  --login-search-focus-shadow: rgba(251, 122, 36, 0.16);
+  --login-card-shadow: rgba(0, 0, 0, 0.35);
   --surface: #171413;
   --surface-raised: #1b1715;
   --surface-inset: #100f0e;
