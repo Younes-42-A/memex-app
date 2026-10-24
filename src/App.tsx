@@ -10,13 +10,13 @@ import {
 } from './workspaceStorage'
 import type { StoredFile } from './workspaceStorage'
 import ChatSettingsModal, { type ChatSettings } from './components/ChatSettingsModal'
-import ChatSidebarWithHistory, { type ChatSession } from './components/ChatSidebarWithHistory'
-import AskSelect from './components/AskSelect'
+import type { ChatSession } from './components/ChatSidebarWithHistory'
 import Dashboard from './pages/Dashboard'
 import Courses from './pages/Courses'
 import Files from './pages/Files'
 import ProfilePage from './pages/Profile'
 import Settings from './pages/Settings'
+import AskAxi from './pages/AskAxi'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -705,155 +705,51 @@ function App() {
         )}
 
         {activeSection === 'ask-axi' && (
-          <section className="chat-workspace" aria-label={text.studyAssistant}>
-            <ChatSidebarWithHistory
-              sessions={chatSessions}
-              activeSessionId={activeChatId}
-              currentDate={now}
-              onNewChat={startNewChat}
-              onSelectChat={(session) => {
-                setActiveChatId(session.id)
-                setAskPrompt('')
-                setChatAttachments([])
-                setChatAttachmentError('')
-              }}
-              onDeleteChat={deleteChat}
-              onRenameChat={renameChat}
-            />
-            <div className="chat-workspace-main">
-              <div className="ask-heading chat-heading">
-                <div>
-                  <p className="section-kicker">{text.studyAssistant}</p>
-                  <h1 id="ask-title">{activeChat?.title ?? getAskGreeting(now, courses, files, askCourseSelection, preferences.language)}</h1>
-                  <p>{text.askDescription}</p>
-                </div>
-                <button className="chat-settings-trigger" type="button" onClick={() => setChatSettingsOpen(true)}>
-                  <span aria-hidden="true">⚙</span> Chat settings
-                </button>
-              </div>
-
-              <div className="ask-composer">
-              <label className="visually-hidden" htmlFor="ask-prompt">{text.yourQuestion}</label>
-              <textarea
-                id="ask-prompt"
-                value={askPrompt}
-                onChange={(event) => setAskPrompt(event.target.value)}
-                placeholder={text.askPlaceholder}
-                rows={4}
-              />
-              {chatAttachments.length > 0 && (
-                <div className="chat-attachment-list" aria-label="Chat attachments">
-                  {chatAttachments.map(({ id, file }) => (
-                    <span className="chat-attachment-chip" key={id} title={file.name}>
-                      <span className="chat-attachment-icon" aria-hidden="true">
-                        {file.type.startsWith('image/') ? '▧' : '▤'}
-                      </span>
-                      <span className="chat-attachment-name">{file.name}</span>
-                      <button
-                        type="button"
-                        aria-label={`Remove ${file.name}`}
-                        onClick={() => setChatAttachments((current) => current.filter((attachment) => attachment.id !== id))}
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-              {chatAttachmentError && <p className="chat-attachment-error" role="alert">{chatAttachmentError}</p>}
-              <div className="ask-composer-controls">
-                <div className="ask-selectors">
-                  <AskSelect
-                    label={text.answerStyle}
-                    value={answerStyle}
-                    icon="✦"
-                    options={[
-                      { value: 'balanced', label: text.balanced },
-                      { value: 'concise', label: text.concise },
-                      { value: 'step-by-step', label: text.stepByStep },
-                    ]}
-                    onChange={(value) => setAnswerStyle(toAnswerStyle(value))}
-                  />
-                  <AskSelect
-                    label={text.course}
-                    value={askCourseSelection}
-                    icon="▦"
-                    options={[
-                      { value: '', label: text.allCourses },
-                      ...courses.map((course) => ({
-                        value: course.code,
-                        label: `${course.code} · ${course.title}`,
-                      })),
-                    ]}
-                    onChange={(value) => {
-                      setAskCourseCode(value)
-                      if (askFileId && files.find((file) => file.id === askFileId)?.courseCode !== value) {
-                        setAskFileId('')
-                      }
-                    }}
-                  />
-                  <AskSelect
-                    label={text.studyFile}
-                    value={askFileId}
-                    icon="▤"
-                    options={[
-                      { value: '', label: text.allFiles },
-                      ...files
-                        .filter((file) => !askCourseSelection || file.courseCode === askCourseSelection)
-                        .map((studyFile) => ({
-                          value: studyFile.id,
-                          label: studyFile.file.name,
-                        })),
-                    ]}
-                    onChange={(value) => {
-                      setAskFileId(value)
-                      const selectedFile = files.find((file) => file.id === value)
-                      if (selectedFile?.courseCode) setAskCourseCode(selectedFile.courseCode)
-                    }}
-                  />
-                </div>
-                <div className="ask-composer-actions">
-                  <input
-                    ref={chatImageInputRef}
-                    className="visually-hidden"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    aria-label="Choose images to attach"
-                    onChange={handleChatAttachmentChange}
-                  />
-                  <input
-                    ref={chatFileInputRef}
-                    className="visually-hidden"
-                    type="file"
-                    multiple
-                    aria-label="Choose files to attach"
-                    onChange={handleChatAttachmentChange}
-                  />
-                  <button className="chat-attach-button" type="button" aria-label="Add images" title="Add images" onClick={() => chatImageInputRef.current?.click()}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <rect x="3" y="4" width="18" height="16" rx="3" />
-                      <circle cx="8.5" cy="9" r="1.5" />
-                      <path d="m4 17 5-5 3 3 2-2 6 6" />
-                    </svg>
-                  </button>
-                  <button className="chat-attach-button" type="button" aria-label="Add files" title="Add files" onClick={() => chatFileInputRef.current?.click()}>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M13.5 6.5 8 12a3.5 3.5 0 0 0 5 5l6-6a5 5 0 0 0-7-7l-7 7a6.5 6.5 0 0 0 9 9l5-5" />
-                    </svg>
-                  </button>
-                  <button className="ask-send-button" type="button" disabled aria-label="Send question">
-                    <span aria-hidden="true">➤</span>
-                  </button>
-                </div>
-              </div>
-              </div>
-              <p className="ask-note">{text.askNotConnected}</p>
-            </div>
-          </section>
+          <AskAxi
+            text={text}
+            courses={courses}
+            files={files}
+            chatSessions={chatSessions}
+            activeChatId={activeChatId}
+            now={now}
+            heading={activeChat?.title ?? getAskGreeting(now, courses, files, askCourseSelection, preferences.language)}
+            askCourseSelection={askCourseSelection}
+            answerStyle={answerStyle}
+            askFileId={askFileId}
+            askPrompt={askPrompt}
+            chatAttachments={chatAttachments}
+            chatAttachmentError={chatAttachmentError}
+            chatImageInputRef={chatImageInputRef}
+            chatFileInputRef={chatFileInputRef}
+            onStartNewChat={startNewChat}
+            onSelectChat={(session) => {
+              setActiveChatId(session.id)
+              setAskPrompt('')
+              setChatAttachments([])
+              setChatAttachmentError('')
+            }}
+            onDeleteChat={deleteChat}
+            onRenameChat={renameChat}
+            onOpenChatSettings={() => setChatSettingsOpen(true)}
+            onPromptChange={setAskPrompt}
+            onRemoveAttachment={(id) => setChatAttachments((current) => current.filter((attachment) => attachment.id !== id))}
+            onAnswerStyleChange={(value) => setAnswerStyle(toAnswerStyle(value))}
+            onCourseChange={(value) => {
+              setAskCourseCode(value)
+              if (askFileId && files.find((file) => file.id === askFileId)?.courseCode !== value) {
+                setAskFileId('')
+              }
+            }}
+            onFileChange={(value) => {
+              setAskFileId(value)
+              const selectedFile = files.find((file) => file.id === value)
+              if (selectedFile?.courseCode) setAskCourseCode(selectedFile.courseCode)
+            }}
+            onAttachmentChange={handleChatAttachmentChange}
+          />
         )}
 
-        {activeSection === 'courses' && (
+                {activeSection === 'courses' && (
           <Courses
             text={text}
             courses={courses}
