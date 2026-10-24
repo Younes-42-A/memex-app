@@ -11,7 +11,6 @@ import {
 import type { StoredFile } from './workspaceStorage'
 import ChatSettingsModal, { type ChatSettings } from './ChatSettingsModal'
 import ChatSidebarWithHistory, { type ChatSession } from './ChatSidebarWithHistory'
-import './App.css'
 
 type Course = {
   code: string

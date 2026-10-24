@@ -1,0 +1,510 @@
+/* Error register and weakness tracking styles for the currently unused page. */
+
+.error-register-alert {
+  padding: 9px 10px;
+  border: 1px solid var(--border-danger-muted);
+  border-radius: 8px;
+  background: var(--danger-alert-soft);
+  color: var(--text-error);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.error-register-heading h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 24px;
+  letter-spacing: -0.5px;
+}
+
+.error-register-filter select {
+  min-height: 36px;
+  max-width: 190px;
+  padding: 0 29px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-control-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 10px;
+}
+
+.error-register {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 38px 0;
+}
+
+.error-register-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.error-register-heading-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 9px;
+}
+
+.weakness-entry-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.weakness-entry-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.weakness-entry-form input,
+.weakness-entry-form select,
+.weakness-entry-form textarea {
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-control-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 10px;
+}
+
+.weakness-entry-form textarea {
+  resize: vertical;
+}
+
+.weakness-entry-form input::placeholder,
+.weakness-entry-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.weakness-entry-note {
+  grid-column: 1 / -1;
+}
+
+.weakness-entry-form .error-register-alert {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.weakness-entry-submit {
+  justify-self: end;
+}
+
+.error-register-heading > div:first-child > p:last-child {
+  max-width: 560px;
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.error-register-progress {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.error-register-progress-ring {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--border-accent);
+  border-radius: 50%;
+  background: var(--surface-selected);
+  color: var(--text-accent);
+}
+
+.error-register-progress strong,
+.error-register-progress small,
+.error-register-stats strong,
+.error-register-stats small {
+  display: block;
+}
+
+.error-register-progress strong {
+  font-size: 14px;
+}
+
+.error-register-progress small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.error-register-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 23px 0;
+}
+
+.error-register-stats article {
+  display: flex;
+  min-height: 75px;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+}
+
+.error-stat-icon {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface-selected);
+  color: var(--text-accent);
+}
+
+.error-stat-icon.mastered {
+  background: var(--line-status-success);
+  color: var(--text-status-success);
+}
+
+.error-stat-icon.total {
+  background: var(--line-status-info);
+  color: var(--text-status-info);
+}
+
+.error-register-stats strong {
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.error-register-stats small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.error-register-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.error-register-search {
+  display: flex;
+  min-width: 170px;
+  min-height: 37px;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.error-register-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.error-register-filter select {
+  max-width: none;
+  height: 37px;
+}
+
+.error-register-list {
+  display: grid;
+  gap: 9px;
+}
+
+.weakness-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+}
+
+.weakness-category-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface-selected);
+  color: var(--text-accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.weakness-category-icon.code {
+  background: var(--line-status-info);
+  color: var(--text-status-info);
+  font-size: 10px;
+}
+
+.weakness-category-icon.calculation {
+  background: var(--line-status-purple);
+  color: var(--text-status-purple);
+}
+
+.weakness-card-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.weakness-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.weakness-card-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.weakness-card-content > p {
+  margin: 6px 0 9px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.weakness-status,
+.weakness-subject,
+.weakness-category {
+  display: inline-flex;
+  min-height: 21px;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: var(--surface-status);
+  color: var(--text-status);
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.weakness-status.practicing {
+  background: var(--line-status-info);
+  color: var(--text-status-practicing);
+}
+
+.weakness-status.mastered {
+  background: var(--line-status-success);
+  color: var(--text-status-mastered);
+}
+
+.weakness-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.weakness-subject {
+  background: var(--surface-status-subtle);
+  color: var(--text-status-neutral);
+}
+
+.weakness-category {
+  background: var(--surface-status-category);
+  color: var(--text-status-muted);
+}
+
+.weakness-review-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-accent);
+  font: inherit;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.weakness-review-button:hover,
+.weakness-review-prompt button:hover {
+  border-color: var(--border-accent);
+  background: var(--surface-selected);
+}
+
+.weakness-review-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 11px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.weakness-review-prompt button,
+.error-register-empty button {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid var(--border-accent);
+  border-radius: 7px;
+  background: var(--surface-selected);
+  color: var(--text-accent);
+  font: inherit;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.error-register-empty {
+  display: grid;
+  min-height: 200px;
+  place-content: center;
+  justify-items: center;
+  padding: 25px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.error-register-empty > span {
+  margin-bottom: 9px;
+  color: var(--text-accent);
+  font-size: 22px;
+}
+
+.error-register-empty strong {
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.error-register-empty p {
+  margin: 7px 0 0;
+  font-size: 10px;
+}
+
+.error-register-empty button {
+  margin-top: 12px;
+}
+
+.app-shell[data-theme='light'] .error-register-progress,
+.app-shell[data-theme='light'] .error-register-stats article,
+.app-shell[data-theme='light'] .error-register-search,
+.app-shell[data-theme='light'] .weakness-card {
+  background-color: #fff;
+  color: #303846;
+}
+
+.app-shell[data-theme='light'] .weakness-entry-form,
+.app-shell[data-theme='light'] .weakness-entry-form input,
+.app-shell[data-theme='light'] .weakness-entry-form select,
+.app-shell[data-theme='light'] .weakness-entry-form textarea {
+  background-color: #fff;
+  color: #303846;
+}
+
+.app-shell[data-theme='light'] .weakness-subject,
+.app-shell[data-theme='light'] .weakness-category {
+  background: #f0f2f6;
+  color: #515a68;
+}
+
+@media (max-width: 760px) {
+.error-register {
+    padding-block: 28px;
+  }
+
+.weakness-card {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 580px) {
+.error-register-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+.error-register-heading-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+.weakness-entry-form {
+    grid-template-columns: 1fr;
+  }
+
+.error-register-stats {
+    gap: 7px;
+  }
+
+.error-register-stats article {
+    min-height: 68px;
+    gap: 7px;
+    padding: 8px;
+  }
+
+.error-stat-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+.error-register-toolbar {
+    flex-wrap: wrap;
+  }
+
+.error-register-search {
+    flex-basis: 100%;
+  }
+
+.error-register-filter {
+    flex: 1;
+  }
+
+.error-register-filter select {
+    width: 100%;
+  }
+
+.weakness-review-button {
+    margin-inline-start: 48px;
+  }
+
+.weakness-review-prompt {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
