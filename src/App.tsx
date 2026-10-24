@@ -11,7 +11,7 @@ import {
 import type { StoredFile } from './workspaceStorage'
 import ChatSettingsModal, { type ChatSettings } from './ChatSettingsModal'
 import ChatSidebarWithHistory, { type ChatSession } from './ChatSidebarWithHistory'
-import { interfaceText, type Language } from './i18n'
+import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
   AppPreferences,
@@ -23,25 +23,17 @@ import type {
   SelectOption,
   SettingsSection,
   StudyFile,
-  Theme,
 } from './types'
+import { formatSize } from './utils/format'
+import { getAskGreeting, getGreeting } from './utils/greetings'
+import { readSavedChatSessions } from './storage/chatHistory'
+import { defaultPreferences, readSavedPreferences } from './storage/preferences'
+import { readSavedProfile } from './storage/profile'
 
 const emptyCourseForm: CourseForm = { code: '', title: '', instructor: '' }
 const courseColors: Course['color'][] = ['blue', 'purple', 'green']
 const username = 'Younes'
-const defaultProfile: Profile = { bio: '', photo: '' }
 const storageLimit = 5 * 1024 ** 3
-const defaultPreferences: AppPreferences = {
-  homePage: 'dashboard',
-  density: 'comfortable',
-  reduceMotion: false,
-  defaultAnswerStyle: 'balanced',
-  defaultCourseCode: '',
-  language: 'en',
-  showNotifications: true,
-  confirmCourseRemoval: true,
-  theme: 'light',
-}
 
 function toHomePage(value: string): HomePage {
   return value === 'ask-axi' ? value : 'dashboard'
@@ -51,170 +43,11 @@ function toAnswerStyle(value: string): AnswerStyle {
   return value === 'concise' || value === 'step-by-step' ? value : 'balanced'
 }
 
-function readSavedPreferences(): { preferences: AppPreferences; status: string } {
-  try {
-    const savedPreferences = window.localStorage.getItem('memex-settings')
-    if (!savedPreferences) return { preferences: defaultPreferences, status: '' }
-
-    const parsed: unknown = JSON.parse(savedPreferences)
-    if (typeof parsed !== 'object' || parsed === null) throw new Error('Invalid settings format.')
-
-    const homePage: HomePage = 'homePage' in parsed && parsed.homePage === 'ask-axi'
-      ? parsed.homePage
-      : defaultPreferences.homePage
-    const density: AppPreferences['density'] = 'density' in parsed && parsed.density === 'compact'
-      ? 'compact'
-      : 'comfortable'
-    const reduceMotion = 'reduceMotion' in parsed && parsed.reduceMotion === true
-    const defaultAnswerStyle: AnswerStyle = 'defaultAnswerStyle' in parsed && (
-      parsed.defaultAnswerStyle === 'concise'
-      || parsed.defaultAnswerStyle === 'step-by-step'
-    ) ? parsed.defaultAnswerStyle : 'balanced'
-    const defaultCourseCode = 'defaultCourseCode' in parsed && typeof parsed.defaultCourseCode === 'string'
-      ? parsed.defaultCourseCode
-      : ''
-    const language: Language = 'language' in parsed && (
-      parsed.language === 'fr' || parsed.language === 'ar'
-    ) ? parsed.language : 'en'
-    const showNotifications = !('showNotifications' in parsed) || parsed.showNotifications !== false
-    const confirmCourseRemoval = !('confirmCourseRemoval' in parsed) || parsed.confirmCourseRemoval !== false
-    const theme: Theme = 'theme' in parsed && (
-      parsed.theme === 'ocean' || parsed.theme === 'forest' || parsed.theme === 'light'
-    ) ? parsed.theme : 'ember'
-
-    return {
-      preferences: {
-        homePage,
-        density,
-        reduceMotion,
-        defaultAnswerStyle,
-        defaultCourseCode,
-        language,
-        showNotifications,
-        confirmCourseRemoval,
-        theme,
-      },
-      status: '',
-    }
-  } catch {
-    return {
-      preferences: defaultPreferences,
-      status: 'Your saved settings could not be loaded. Default settings are in use.',
-    }
-  }
-}
-
-function readSavedProfile() {
-  try {
-    const savedProfile = window.localStorage.getItem('memex-profile')
-    if (!savedProfile) return { profile: defaultProfile, status: '' }
-
-    const parsed: unknown = JSON.parse(savedProfile)
-    if (
-      typeof parsed === 'object'
-      && parsed !== null
-      && 'bio' in parsed
-      && typeof parsed.bio === 'string'
-      && 'photo' in parsed
-      && typeof parsed.photo === 'string'
-    ) {
-      return { profile: { bio: parsed.bio, photo: parsed.photo }, status: '' }
-    }
-    return { profile: defaultProfile, status: 'Your saved profile could not be read. You can create a new one.' }
-  } catch {
-    return { profile: defaultProfile, status: 'Your saved profile could not be loaded. Changes may not be saved.' }
-  }
-}
-
-function readSavedChatSessions(): ChatSession[] {
-  const fallback: ChatSession[] = [
-    { id: 'chat-today', title: 'Reviewing recursion examples', updatedAt: new Date(Date.now() - 18 * 60 * 1000).toISOString() },
-    { id: 'chat-yesterday', title: 'Preparing for statistics quiz', updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000 - 45 * 60 * 1000).toISOString() },
-    { id: 'chat-older', title: 'Big-O notation explained', updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-  ]
-
-  try {
-    const stored = window.localStorage.getItem('memex-chat-history')
-    if (!stored) return fallback
-    const parsed: unknown = JSON.parse(stored)
-    if (!Array.isArray(parsed)) throw new Error('Saved chat history must be a list.')
-
-    return parsed.filter((value): value is ChatSession => (
-      typeof value === 'object'
-      && value !== null
-      && 'id' in value && typeof value.id === 'string'
-      && 'title' in value && typeof value.title === 'string'
-      && 'updatedAt' in value && typeof value.updatedAt === 'string'
-    ))
-  } catch {
-    return fallback
-  }
-}
-
 function getPageFromHash(defaultPage: HomePage = 'dashboard'): PageName {
   const page = window.location.hash.slice(1)
   return page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
     ? page
     : defaultPage
-}
-
-function getGreeting(date: Date, language: Language) {
-  const hour = date.getHours()
-  const text = interfaceText[language]
-  if (hour < 12) return text.goodMorning
-  if (hour < 17) return text.goodAfternoon
-  if (hour < 21) return text.goodEvening
-  return text.goodNight
-}
-
-function getAskGreeting(
-  date: Date,
-  courses: Course[],
-  files: StudyFile[],
-  selectedCourseCode: string | null,
-  language: Language,
-) {
-  const selectedCourse = courses.find((course) => course.code === selectedCourseCode)
-  if (selectedCourse) {
-    if (language === 'fr') return `Que souhaitez-vous savoir sur ${selectedCourse.title} ?`
-    if (language === 'ar') return `ما الذي تود معرفته عن ${selectedCourse.title}؟`
-    return `What’s on your mind about ${selectedCourse.title}?`
-  }
-  if (courses.length === 0 && files.length === 0) {
-    if (language === 'fr') return 'Que souhaitez-vous explorer aujourd’hui ?'
-    if (language === 'ar') return 'ما الذي ترغب في استكشافه اليوم؟'
-    return 'What would you like to explore today?'
-  }
-  if (files.length === 0) {
-    if (language === 'fr') return 'Quel cours souhaitez-vous explorer ?'
-    if (language === 'ar') return 'أي مقرر ترغب في استكشافه؟'
-    return 'Which course would you like to explore?'
-  }
-
-  const hour = date.getHours()
-  if (language === 'fr') {
-    if (hour < 12) return 'Qu’étudiez-vous ce matin ?'
-    if (hour < 17) return 'Sur quoi travaillez-vous aujourd’hui ?'
-    if (hour < 21) return 'Que souhaitez-vous comprendre ce soir ?'
-    return 'Que souhaitez-vous découvrir ce soir ?'
-  }
-  if (language === 'ar') {
-    if (hour < 12) return 'ماذا تدرس هذا الصباح؟'
-    if (hour < 17) return 'على ماذا تعمل اليوم؟'
-    if (hour < 21) return 'ما الذي تود فهمه هذا المساء؟'
-    return 'ما الذي يثير فضولك الليلة؟'
-  }
-  if (hour < 12) return 'What are you studying this morning?'
-  if (hour < 17) return 'What are you working on today?'
-  if (hour < 21) return 'What would you like to figure out this evening?'
-  return 'What are you curious about tonight?'
-}
-
-function formatSize(bytes: number) {
-  if (bytes === 0) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB']
-  const unitIndex = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  return `${(bytes / 1024 ** unitIndex).toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`
 }
 
 type AskOption = {
