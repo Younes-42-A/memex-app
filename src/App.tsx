@@ -15,6 +15,7 @@ import AskSelect from './components/AskSelect'
 import SettingsSelect from './components/SettingsSelect'
 import Dashboard from './pages/Dashboard'
 import Courses from './pages/Courses'
+import Files from './pages/Files'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -861,88 +862,24 @@ function App() {
           />
         )}
 
-        {activeSection === 'files' && <section className="content-section files-section" aria-labelledby="files-title">
-          <div className="section-heading">
-            <div>
-              <p className="section-kicker">{text.uploads}</p>
-              <h2 id="files-title">{selectedCourseCode ? `${text.files} · ${selectedCourseCode}` : text.files}</h2>
-            </div>
-            <div className="file-actions">
-              {selectedCourseCode && (
-                <button className="text-button" type="button" onClick={() => setSelectedCourseCode(null)}>
-                  {text.showAll}
-                </button>
-              )}
-              <button className="primary-button" type="button" disabled={!workspaceLoaded || storageRemaining === 0} onClick={() => fileInputRef.current?.click()}>
-                {text.addFiles}
-              </button>
-              <input
-                ref={fileInputRef}
-                className="visually-hidden"
-                type="file"
-                multiple
-                aria-label="Choose study files"
-                onChange={handleUpload}
-              />
-            </div>
-          </div>
-
-          <div className="storage-summary">
-            <div className="storage-summary-label">
-              <strong>{text.workspaceStorage}</strong>
-              <span>{formatSize(storageUsed)} of {text.totalStorage} {text.storageUsed} · {formatSize(storageRemaining)} {text.storageRemaining}</span>
-            </div>
-            <div
-              className="storage-progress"
-              role="progressbar"
-              aria-label="Workspace storage used"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={Math.round(storagePercent)}
-            >
-              <span style={{ width: `${storagePercent}%` }} />
-            </div>
-          </div>
-
-          {visibleFiles.length > 0 ? (
-            <div className="file-list" role="list">
-              {visibleFiles.map((studyFile) => {
-                const course = courses.find((item) => item.code === studyFile.courseCode)
-                const extension = studyFile.file.name.includes('.')
-                  ? studyFile.file.name.split('.').pop()?.slice(0, 4).toUpperCase() ?? 'FILE'
-                  : 'FILE'
-                return (
-                  <article className="file-row" key={studyFile.id} role="listitem">
-                    <span className="file-type" aria-hidden="true">{extension}</span>
-                    <div className="file-name">
-                      <a href={studyFile.url} target="_blank" rel="noreferrer">
-                        {studyFile.file.name}
-                      </a>
-                      <span>{course?.title ?? 'No course selected'}</span>
-                    </div>
-                    <time className="file-date" dateTime={studyFile.uploadedAt.toISOString()}>
-                      {studyFile.uploadedAt.toLocaleString()}
-                    </time>
-                    <span className="file-size">{formatSize(studyFile.file.size)}</span>
-                    <button
-                      className="remove-file-button"
-                      type="button"
-                      aria-label={`Remove ${studyFile.file.name}`}
-                      onClick={() => handleRemoveFile(studyFile)}
-                    >
-                      ×
-                    </button>
-                  </article>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <strong>{text.noFiles}</strong>
-              <p>{text.addFilesHelp}</p>
-            </div>
-          )}
-        </section>}
+        {activeSection === 'files' && (
+          <Files
+            text={text}
+            selectedCourseCode={selectedCourseCode}
+            workspaceLoaded={workspaceLoaded}
+            storageRemaining={storageRemaining}
+            storageRemainingLabel={formatSize(storageRemaining)}
+            storageUsedLabel={formatSize(storageUsed)}
+            storagePercent={storagePercent}
+            courses={courses}
+            visibleFiles={visibleFiles}
+            fileInputRef={fileInputRef}
+            onShowAll={() => setSelectedCourseCode(null)}
+            onChooseFiles={() => fileInputRef.current?.click()}
+            onUpload={handleUpload}
+            onRemoveFile={handleRemoveFile}
+          />
+        )}
 
         {activeSection === 'profile' && (
           <section className="content-section profile-section" aria-labelledby="profile-title">
