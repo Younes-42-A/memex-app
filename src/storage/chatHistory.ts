@@ -1,5 +1,5 @@
 /* Reads saved chat sessions and supplies the default session list. */
-import type { ChatSession } from '../ChatSidebarWithHistory'
+import type { ChatSession } from '../components/ChatSidebarWithHistory'
 
 export function readSavedChatSessions(): ChatSession[] {
   const fallback: ChatSession[] = [

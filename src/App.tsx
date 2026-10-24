@@ -9,8 +9,10 @@ import {
   saveFiles,
 } from './workspaceStorage'
 import type { StoredFile } from './workspaceStorage'
-import ChatSettingsModal, { type ChatSettings } from './ChatSettingsModal'
-import ChatSidebarWithHistory, { type ChatSession } from './ChatSidebarWithHistory'
+import ChatSettingsModal, { type ChatSettings } from './components/ChatSettingsModal'
+import ChatSidebarWithHistory, { type ChatSession } from './components/ChatSidebarWithHistory'
+import AskSelect from './components/AskSelect'
+import SettingsSelect from './components/SettingsSelect'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -20,7 +22,6 @@ import type {
   HomePage,
   PageName,
   Profile,
-  SelectOption,
   SettingsSection,
   StudyFile,
 } from './types'
@@ -48,165 +49,6 @@ function getPageFromHash(defaultPage: HomePage = 'dashboard'): PageName {
   return page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
     ? page
     : defaultPage
-}
-
-type AskOption = {
-  value: string
-  label: string
-}
-
-function AskSelect({
-  label,
-  value,
-  options,
-  icon,
-  onChange,
-}: {
-  label: string
-  value: string
-  options: AskOption[]
-  icon: string
-  onChange: (value: string) => void
-}) {
-  const [open, setOpen] = useState(false)
-  const selectRef = useRef<HTMLDivElement>(null)
-  const selectedOption = options.find((option) => option.value === value) ?? options[0]
-
-  useEffect(() => {
-    if (!open) return
-
-    function handlePointerDown(event: PointerEvent) {
-      if (event.target instanceof Node && !selectRef.current?.contains(event.target)) {
-        setOpen(false)
-      }
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false)
-    }
-
-    document.addEventListener('pointerdown', handlePointerDown)
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown)
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [open])
-
-  return (
-    <div className="ask-select" ref={selectRef}>
-      <button
-        className="ask-select-trigger"
-        type="button"
-        aria-label={label}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        onClick={() => setOpen((current) => !current)}
-      >
-        <span className="ask-select-icon" aria-hidden="true">{icon}</span>
-        <span className="ask-select-value">{selectedOption?.label ?? 'Choose'}</span>
-        <span className={`ask-select-chevron${open ? ' open' : ''}`} aria-hidden="true">⌄</span>
-      </button>
-      {open && (
-        <div className="ask-select-menu" role="listbox" aria-label={label}>
-          {options.map((option) => (
-            <button
-              className={`ask-select-option${option.value === value ? ' selected' : ''}`}
-              type="button"
-              role="option"
-              aria-selected={option.value === value}
-              key={option.value}
-              onClick={() => {
-                onChange(option.value)
-                setOpen(false)
-              }}
-            >
-              <span>{option.label}</span>
-              {option.value === value && <span className="ask-select-check" aria-hidden="true">✓</span>}
-            </button>
-          ))}
-        </div>
-      )}
-
-    </div>
-  )
-}
-
-function SettingsSelect({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string
-  value: string
-  options: SelectOption[]
-  onChange: (value: string) => void
-}) {
-  const [open, setOpen] = useState(false)
-  const selectRef = useRef<HTMLDivElement>(null)
-  const selectedOption = options.find((option) => option.value === value) ?? options[0]
-
-  useEffect(() => {
-    if (!open) return
-
-    function handlePointerDown(event: PointerEvent) {
-      if (event.target instanceof Node && !selectRef.current?.contains(event.target)) setOpen(false)
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false)
-    }
-
-    document.addEventListener('pointerdown', handlePointerDown)
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown)
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [open])
-
-  return (
-    <div className="settings-select-wrap" ref={selectRef}>
-      <button
-        className="settings-select-trigger"
-        type="button"
-        aria-label={label}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        onClick={() => setOpen((current) => !current)}
-      >
-        <span className="settings-select-current">
-          {selectedOption?.swatch && <span className="theme-swatch" style={{ background: selectedOption.swatch }} aria-hidden="true" />}
-          {selectedOption?.label ?? 'Choose'}
-        </span>
-        <span className={`settings-select-chevron${open ? ' open' : ''}`} aria-hidden="true">⌄</span>
-      </button>
-      {open && (
-        <div className="settings-select-menu" role="listbox" aria-label={label}>
-          {options.map((option) => (
-            <button
-              className={`settings-select-option${option.value === value ? ' selected' : ''}`}
-              type="button"
-              role="option"
-              aria-selected={option.value === value}
-              key={option.value}
-              onClick={() => {
-                onChange(option.value)
-                setOpen(false)
-              }}
-            >
-              <span className="settings-select-option-label">
-                {option.swatch && <span className="theme-swatch" style={{ background: option.swatch }} aria-hidden="true" />}
-                {option.label}
-              </span>
-              {option.value === value && <span aria-hidden="true">✓</span>}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
 }
 
 function App() {
