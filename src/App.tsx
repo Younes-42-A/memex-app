@@ -456,7 +456,9 @@ function App() {
             {text.overview}
           </a>
           <button className="nav-item nav-item-disabled" type="button" disabled aria-disabled="true" title="Coming soon">
-            <span className="nav-icon" aria-hidden="true">▤</span>
+            <span className="nav-icon" aria-hidden="true">
+              <i className="fa-solid fa-rss"></i>
+            </span>
             Feed
             <span className="nav-coming-soon">Soon</span>
           </button>
