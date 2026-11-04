@@ -36,7 +36,7 @@ const fr = {
   notifications: 'Notifications', study: 'Espace d’étude', assistant: 'Demander à AXI',
   data: 'Stockage et données', language: 'Langue', languageHelp: 'Choisissez la langue utilisée dans Memex.',
   theme: 'Thème de couleur', themeHelp: 'Choisissez une palette pour tout l’espace.',
-  emberTheme: 'Ambre', oceanTheme: 'Océan', forestTheme: 'Forêt', lightTheme: 'Clair',
+  darkTheme: 'Sombre', lightTheme: 'Clair',
   density: 'Densité de l’espace', densityHelp: 'Ajustez l’espacement des cartes et des listes.',
   comfortable: 'Confortable', compact: 'Compact', startPage: 'Page de démarrage',
   startPageHelp: 'Page affichée lorsque Memex s’ouvre sans page sélectionnée.',

@@ -6,9 +6,7 @@
 - [ ] Profile page
 - [ ] Ask Axi page
 - [ ] Settings page
-- [ ] Ember theme
-- [ ] Ocean theme
-- [ ] Forest theme
+- [ ] Dark theme
 - [ ] Light theme
 - [ ] English language
 - [ ] French language

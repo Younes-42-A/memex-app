@@ -25,7 +25,7 @@ export type CourseForm = {
 export type PageName = 'dashboard' | 'courses' | 'files' | 'profile' | 'ask-axi' | 'settings'
 export type HomePage = Exclude<PageName, 'courses' | 'files' | 'profile' | 'settings'>
 export type AnswerStyle = 'balanced' | 'concise' | 'step-by-step'
-export type Theme = 'ember' | 'ocean' | 'forest' | 'light'
+export type Theme = 'dark' | 'light'
 export type SettingsSection = 'account' | 'appearance' | 'accessibility' | 'notifications' | 'study' | 'data'
 
 export type AppPreferences = {

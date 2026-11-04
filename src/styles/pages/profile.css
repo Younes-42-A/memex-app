@@ -113,14 +113,8 @@
   background: var(--surface-selected);
 }
 
-.app-shell[data-theme='ocean'] .profile-popover,
-.app-shell[data-theme='ocean'] .profile-card {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .profile-popover,
-.app-shell[data-theme='forest'] .profile-card {
+.app-shell[data-theme='dark'] .profile-popover,
+.app-shell[data-theme='dark'] .profile-card {
   border-color: var(--border);
   background-color: var(--surface-card);
 }

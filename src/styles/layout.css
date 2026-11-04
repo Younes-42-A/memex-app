@@ -318,16 +318,7 @@
   background: var(--accent);
 }
 
-.app-shell[data-theme='ocean'] {
-  --ink: var(--text);
-  --muted: var(--text-muted);
-  --line: var(--border);
-  background:
-    radial-gradient(ellipse at 72% 0%, var(--bg-glow), transparent var(--bg-glow-size)),
-    var(--bg);
-}
-
-.app-shell[data-theme='forest'] {
+.app-shell[data-theme='dark'] {
   --ink: var(--text);
   --muted: var(--text-muted);
   --line: var(--border);
@@ -344,11 +335,7 @@
   background: var(--bg);
 }
 
-.app-shell[data-theme='ocean'] .sidebar {
-  background: var(--sidebar);
-}
-
-.app-shell[data-theme='forest'] .sidebar {
+.app-shell[data-theme='dark'] .sidebar {
   background: var(--sidebar);
 }
 
@@ -356,16 +343,9 @@
   background: var(--sidebar);
 }
 
-.app-shell[data-theme='ocean'] .sidebar-storage,
-.app-shell[data-theme='ocean'] .stat-card,
-.app-shell[data-theme='ocean'] .shortcut-card {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .sidebar-storage,
-.app-shell[data-theme='forest'] .stat-card,
-.app-shell[data-theme='forest'] .shortcut-card {
+.app-shell[data-theme='dark'] .sidebar-storage,
+.app-shell[data-theme='dark'] .stat-card,
+.app-shell[data-theme='dark'] .shortcut-card {
   border-color: var(--border);
   background-color: var(--surface-card);
 }
@@ -377,15 +357,9 @@
   background-color: var(--surface-card);
 }
 
-.app-shell[data-theme='ocean'] .nav-item,
-.app-shell[data-theme='ocean'] .topbar > p,
-.app-shell[data-theme='ocean'] .semester-pill {
-  color: var(--text-nav);
-}
-
-.app-shell[data-theme='forest'] .nav-item,
-.app-shell[data-theme='forest'] .topbar > p,
-.app-shell[data-theme='forest'] .semester-pill {
+.app-shell[data-theme='dark'] .nav-item,
+.app-shell[data-theme='dark'] .topbar > p,
+.app-shell[data-theme='dark'] .semester-pill {
   color: var(--text-nav);
 }
 
@@ -395,14 +369,8 @@
   color: var(--text-nav);
 }
 
-.app-shell[data-theme='ocean'] .nav-item:hover,
-.app-shell[data-theme='ocean'] .nav-item.active {
-  background-color: var(--surface-nav-active);
-  color: var(--text-nav-state);
-}
-
-.app-shell[data-theme='forest'] .nav-item:hover,
-.app-shell[data-theme='forest'] .nav-item.active {
+.app-shell[data-theme='dark'] .nav-item:hover,
+.app-shell[data-theme='dark'] .nav-item.active {
   background-color: var(--surface-nav-active);
   color: var(--text-nav-state);
 }
@@ -413,10 +381,8 @@
   color: var(--text-nav-state);
 }
 
-.app-shell[data-theme='ocean'] .topbar-settings,
-.app-shell[data-theme='ocean'] .semester-pill,
-.app-shell[data-theme='forest'] .topbar-settings,
-.app-shell[data-theme='forest'] .semester-pill,
+.app-shell[data-theme='dark'] .topbar-settings,
+.app-shell[data-theme='dark'] .semester-pill,
 .app-shell[data-theme='light'] .topbar-settings,
 .app-shell[data-theme='light'] .semester-pill {
   border-color: var(--border-topbar-control);
@@ -465,12 +431,7 @@
   background-color: #f8f9fc;
 }
 
-.app-shell[data-theme='ocean'] .primary-button {
-  border-color: var(--primary-button-border);
-  background: linear-gradient(110deg, var(--primary-button-gradient-start), var(--primary-button-gradient-end));
-}
-
-.app-shell[data-theme='forest'] .primary-button {
+.app-shell[data-theme='dark'] .primary-button {
   border-color: var(--primary-button-border);
   background: linear-gradient(110deg, var(--primary-button-gradient-start), var(--primary-button-gradient-end));
 }
@@ -480,11 +441,7 @@
   background: linear-gradient(110deg, var(--primary-button-gradient-start), var(--primary-button-gradient-end));
 }
 
-.app-shell[data-theme='ocean'] .storage-progress span {
-  background: linear-gradient(90deg, var(--storage-progress-gradient-start), var(--storage-progress-gradient-end));
-}
-
-.app-shell[data-theme='forest'] .storage-progress span {
+.app-shell[data-theme='dark'] .storage-progress span {
   background: linear-gradient(90deg, var(--storage-progress-gradient-start), var(--storage-progress-gradient-end));
 }
 

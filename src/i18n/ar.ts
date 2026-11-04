@@ -36,7 +36,7 @@ const ar = {
   notifications: 'الإشعارات', study: 'مساحة الدراسة', assistant: 'اسأل AXI',
   data: 'التخزين والبيانات', language: 'اللغة', languageHelp: 'اختر لغة واجهة Memex.',
   theme: 'سمة الألوان', themeHelp: 'اختر ألوان مساحة العمل بالكامل.',
-  emberTheme: 'عنبر', oceanTheme: 'محيط', forestTheme: 'غابة', lightTheme: 'فاتح',
+  darkTheme: 'داكن', lightTheme: 'فاتح',
   density: 'كثافة عرض مساحة العمل', densityHelp: 'غيّر المسافات بين البطاقات والقوائم.',
   comfortable: 'مريح', compact: 'مضغوط', startPage: 'صفحة البداية',
   startPageHelp: 'الصفحة التي تظهر عند فتح Memex دون تحديد صفحة.',

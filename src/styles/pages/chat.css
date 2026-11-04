@@ -307,12 +307,7 @@ to { opacity: 1; transform: translateY(0) scale(1); }
   line-height: 1.6;
 }
 
-.app-shell[data-theme='ocean'] .ask-composer {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .ask-composer {
+.app-shell[data-theme='dark'] .ask-composer {
   border-color: var(--border);
   background-color: var(--surface-card);
 }

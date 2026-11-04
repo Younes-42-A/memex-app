@@ -324,11 +324,7 @@
   text-align: right;
 }
 
-.app-shell[data-theme='ocean'] .settings-navigation {
-  background: var(--sidebar);
-}
-
-.app-shell[data-theme='forest'] .settings-navigation {
+.app-shell[data-theme='dark'] .settings-navigation {
   background: var(--sidebar);
 }
 
@@ -336,12 +332,7 @@
   background: var(--sidebar);
 }
 
-.app-shell[data-theme='ocean'] .settings-card {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .settings-card {
+.app-shell[data-theme='dark'] .settings-card {
   border-color: var(--border);
   background-color: var(--surface-card);
 }
@@ -351,17 +342,10 @@
   background-color: var(--surface-card);
 }
 
-.app-shell[data-theme='ocean'] .settings-nav-item,
-.app-shell[data-theme='ocean'] .settings-field strong,
-.app-shell[data-theme='ocean'] .settings-toggle-row strong,
-.app-shell[data-theme='ocean'] .settings-action-row strong {
-  color: var(--text-nav);
-}
-
-.app-shell[data-theme='forest'] .settings-nav-item,
-.app-shell[data-theme='forest'] .settings-field strong,
-.app-shell[data-theme='forest'] .settings-toggle-row strong,
-.app-shell[data-theme='forest'] .settings-action-row strong {
+.app-shell[data-theme='dark'] .settings-nav-item,
+.app-shell[data-theme='dark'] .settings-field strong,
+.app-shell[data-theme='dark'] .settings-toggle-row strong,
+.app-shell[data-theme='dark'] .settings-action-row strong {
   color: var(--text-nav);
 }
 
@@ -372,16 +356,9 @@
   color: var(--text-nav);
 }
 
-.app-shell[data-theme='ocean'] .settings-nav-item:hover,
-.app-shell[data-theme='ocean'] .settings-nav-item.active,
-.app-shell[data-theme='ocean'] .settings-nav-item.active > span {
-  background-color: var(--surface-nav-active);
-  color: var(--text-nav-state);
-}
-
-.app-shell[data-theme='forest'] .settings-nav-item:hover,
-.app-shell[data-theme='forest'] .settings-nav-item.active,
-.app-shell[data-theme='forest'] .settings-nav-item.active > span {
+.app-shell[data-theme='dark'] .settings-nav-item:hover,
+.app-shell[data-theme='dark'] .settings-nav-item.active,
+.app-shell[data-theme='dark'] .settings-nav-item.active > span {
   background-color: var(--surface-nav-active);
   color: var(--text-nav-state);
 }
@@ -393,17 +370,9 @@
   color: var(--text-nav-state);
 }
 
-.app-shell[data-theme='ocean'] .settings-select-trigger,
-.app-shell[data-theme='ocean'] .settings-select-menu,
-.app-shell[data-theme='ocean'] .settings-action {
-  border-color: var(--border-settings-control);
-  background-color: var(--surface-settings-control);
-  color: var(--text-settings-control);
-}
-
-.app-shell[data-theme='forest'] .settings-select-trigger,
-.app-shell[data-theme='forest'] .settings-select-menu,
-.app-shell[data-theme='forest'] .settings-action {
+.app-shell[data-theme='dark'] .settings-select-trigger,
+.app-shell[data-theme='dark'] .settings-select-menu,
+.app-shell[data-theme='dark'] .settings-action {
   border-color: var(--border-settings-control);
   background-color: var(--surface-settings-control);
   color: var(--text-settings-control);
@@ -417,13 +386,8 @@
   color: var(--text-settings-control);
 }
 
-.app-shell[data-theme='ocean'] .settings-select-option,
-.app-shell[data-theme='ocean'] .settings-select-option.selected {
-  color: var(--text-option);
-}
-
-.app-shell[data-theme='forest'] .settings-select-option,
-.app-shell[data-theme='forest'] .settings-select-option.selected {
+.app-shell[data-theme='dark'] .settings-select-option,
+.app-shell[data-theme='dark'] .settings-select-option.selected {
   color: var(--text-option);
 }
 
@@ -432,14 +396,8 @@
   color: var(--text-option);
 }
 
-.app-shell[data-theme='ocean'] .settings-select-option:hover,
-.app-shell[data-theme='ocean'] .settings-select-option:focus-visible {
-  background: var(--surface-option-hover);
-  color: var(--text-option-hover);
-}
-
-.app-shell[data-theme='forest'] .settings-select-option:hover,
-.app-shell[data-theme='forest'] .settings-select-option:focus-visible {
+.app-shell[data-theme='dark'] .settings-select-option:hover,
+.app-shell[data-theme='dark'] .settings-select-option:focus-visible {
   background: var(--surface-option-hover);
   color: var(--text-option-hover);
 }

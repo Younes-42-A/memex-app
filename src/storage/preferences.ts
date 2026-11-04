@@ -11,7 +11,7 @@ export const defaultPreferences: AppPreferences = {
   language: 'en',
   showNotifications: true,
   confirmCourseRemoval: true,
-  theme: 'light',
+  theme: 'dark',
 }
 
 export function readSavedPreferences(): { preferences: AppPreferences; status: string } {
@@ -42,8 +42,8 @@ export function readSavedPreferences(): { preferences: AppPreferences; status: s
     const showNotifications = !('showNotifications' in parsed) || parsed.showNotifications !== false
     const confirmCourseRemoval = !('confirmCourseRemoval' in parsed) || parsed.confirmCourseRemoval !== false
     const theme: Theme = 'theme' in parsed && (
-      parsed.theme === 'ocean' || parsed.theme === 'forest' || parsed.theme === 'light'
-    ) ? parsed.theme : 'ember'
+      parsed.theme === 'dark' || parsed.theme === 'light'
+    ) ? parsed.theme : 'dark'
 
     return {
       preferences: {

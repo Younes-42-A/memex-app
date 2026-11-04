@@ -88,7 +88,6 @@ searches, so verify a rule’s runtime use before removing it.
 
 ## Bugs and inconsistencies noticed but not fixed
 
-- `defaultPreferences.theme` is `'light'`, while the missing/invalid saved-theme fallback in `readSavedPreferences()` is `'ember'`.
 - `readSavedChatSessions()` is invoked twice during initial state setup: once for `chatSessions` and again to choose `activeChatId`.
 - The application username is hardcoded as `'Younes'` in `App.tsx`.
 - `AskSelect`, `SettingsSelect`, and the dropdown controls inside `ChatSettingsModal` have overlapping implementations and remain separate.

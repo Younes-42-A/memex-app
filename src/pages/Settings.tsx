@@ -138,13 +138,11 @@ export default function Settings({
                   label={text.theme}
                   value={preferences.theme}
                   options={[
-                    { value: 'ember', label: text.emberTheme, swatch: '#fb7a24' },
-                    { value: 'ocean', label: text.oceanTheme, swatch: '#38a6e8' },
-                    { value: 'forest', label: text.forestTheme, swatch: '#57b77a' },
+                    { value: 'dark', label: text.darkTheme, swatch: '#fb7a24' },
                     { value: 'light', label: text.lightTheme, swatch: '#7560d6' },
                   ]}
                   onChange={(value) => onPreferencesChange({
-                    theme: value === 'ocean' || value === 'forest' || value === 'light' ? value : 'ember',
+                    theme: value === 'dark' || value === 'light' ? value : 'dark',
                   })}
                 />
               </label>

@@ -1,11 +1,6 @@
 /* Course forms, course cards, and course-specific responsive layout. */
 
-.app-shell[data-theme='ocean'] .course-form {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .course-form {
+.app-shell[data-theme='dark'] .course-form {
   border-color: var(--border);
   background-color: var(--surface-card);
 }

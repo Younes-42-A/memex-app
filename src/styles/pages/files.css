@@ -186,16 +186,9 @@
   font-size: 10px;
 }
 
-.app-shell[data-theme='ocean'] .storage-report,
-.app-shell[data-theme='ocean'] .storage-summary,
-.app-shell[data-theme='ocean'] .file-list {
-  border-color: var(--border);
-  background-color: var(--surface-card);
-}
-
-.app-shell[data-theme='forest'] .storage-report,
-.app-shell[data-theme='forest'] .storage-summary,
-.app-shell[data-theme='forest'] .file-list {
+.app-shell[data-theme='dark'] .storage-report,
+.app-shell[data-theme='dark'] .storage-summary,
+.app-shell[data-theme='dark'] .file-list {
   border-color: var(--border);
   background-color: var(--surface-card);
 }

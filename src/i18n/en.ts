@@ -36,7 +36,7 @@ const en = {
   notifications: 'Notifications', study: 'Study workspace', assistant: 'Ask AXI',
   data: 'Storage & data', language: 'Language', languageHelp: 'Choose the language used across Memex.',
   theme: 'Color theme', themeHelp: 'Choose a palette for the whole workspace.',
-  emberTheme: 'Ember', oceanTheme: 'Ocean', forestTheme: 'Forest', lightTheme: 'Light',
+  darkTheme: 'Dark', lightTheme: 'Light',
   density: 'Workspace density', densityHelp: 'Adjust spacing across workspace cards and lists.',
   comfortable: 'Comfortable', compact: 'Compact', startPage: 'Start page',
   startPageHelp: 'Used when Memex opens without a page selected.',
