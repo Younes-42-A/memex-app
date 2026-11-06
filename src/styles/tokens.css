@@ -145,9 +145,42 @@
   --line-status-purple: rgba(129, 96, 168, 0.18);
   --surface-swatch-border: rgba(255, 255, 255, 0.28);
   --surface-swatch-shadow: rgba(255, 255, 255, 0.06);
+  --muted: var(--text-muted);
+  --line: var(--border);
+  --line-strong: var(--border-strong);
+  --accent-hover: var(--text-accent-hover);
+  --accent-gradient: linear-gradient(110deg, var(--accent-gradient-start), var(--accent-gradient-end));
+  --tint-orange: rgba(251, 122, 36, 0.12);
+  --tint-purple: rgba(157, 111, 209, 0.16);
+  --tint-green: rgba(74, 181, 120, 0.16);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.17);
 }
 
 [data-theme='dark'] {
+  --bg: #0e0d0d;
+  --bg-glow: rgba(120, 28, 20, 0.14);
+  --surface: #171413;
+  --surface-raised: #1b1715;
+  --surface-inset: #100f0e;
+  --sidebar: #141211;
+  --text: #f5eeeb;
+  --text-soft: #c5b8b2;
+  --muted: #b7aaa4;
+  --line: #362a26;
+  --line-strong: #49372f;
+  --accent: #ff6a1a;
+  --accent-hover: #ff5a00;
+  --accent-soft: rgba(255, 106, 26, 0.14);
+  --accent-gradient: linear-gradient(110deg, #ff6a1a, #ff5a00);
+  --danger: #ef5b2a;
+  --tint-orange: rgba(255, 106, 26, 0.14);
+  --tint-purple: rgba(157, 111, 209, 0.18);
+  --tint-green: rgba(74, 181, 120, 0.18);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
   --sidebar: #141211;
   --text-option: #d9cec8;
   --text-option-hover: #ffbc87;
@@ -228,6 +261,28 @@
   --storage-progress-gradient-end: #ff5a00;
 }
 [data-theme='light'] {
+  --bg: #f3f5f8;
+  --bg-glow: rgba(255, 106, 26, 0.08);
+  --surface: #fff;
+  --surface-raised: #fff;
+  --surface-inset: #fff;
+  --sidebar: #fff;
+  --text: #252a33;
+  --text-soft: #515a68;
+  --muted: #697381;
+  --line: #d9dee6;
+  --line-strong: #cbd2dd;
+  --accent: #ff6a1a;
+  --accent-hover: #ff5a00;
+  --accent-soft: rgba(255, 106, 26, 0.12);
+  --accent-gradient: linear-gradient(110deg, #ff6a1a, #ff5a00);
+  --danger: #cf4c3f;
+  --tint-orange: rgba(255, 106, 26, 0.12);
+  --tint-purple: rgba(132, 92, 189, 0.12);
+  --tint-green: rgba(45, 154, 96, 0.12);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 8px 24px rgba(35, 44, 58, 0.08);
   --text-status-purple: #ff6a1a;
   --line-status-purple: rgba(255, 106, 26, 0.12);
   --bg: #f3f5f8;
