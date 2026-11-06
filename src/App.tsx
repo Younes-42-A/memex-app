@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import memexLogo from './assets/Memex.png'
+import moonIcon from './assets/moon.png'
+import notificationIcon from './assets/notification-bell.png'
+import uploadIcon from './assets/upload.png'
+import graduationCapIcon from './assets/graduation-cap.png'
 import {
   deleteCourseAndUnassignFiles,
   deleteFile as deleteStoredFile,
@@ -521,6 +525,17 @@ function App() {
           <p>{formatSize(storageUsed)} used <span>·</span> {formatSize(storageRemaining)} free</p>
         </button>
 
+        <div className="sidebar-note">
+          <span
+            className="sidebar-note-icon"
+            role="img"
+            aria-label="Study journey"
+            style={{ maskImage: `url("${graduationCapIcon}")` }}
+          />
+          <strong>{text.yourSpace}</strong>
+          <p>{text.organizeSpace}</p>
+        </div>
+
         <div className="sidebar-profile" ref={profileMenuRef}>
           <button
             className="sidebar-profile-trigger"
@@ -675,10 +690,7 @@ function App() {
             </p>
             <div className="topbar-icons">
               <button className="icon-button" type="button" aria-label={text.notifications}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-                  <path d="M10 21h4" />
-                </svg>
+                <img className="topbar-icon-image" src={notificationIcon} alt="" />
               </button>
               <button
                 className="icon-button"
@@ -688,9 +700,7 @@ function App() {
                 onClick={() => updatePreferences({ theme: preferences.theme === 'dark' ? 'light' : 'dark' })}
               >
                 {preferences.theme === 'dark' ? (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z" />
-                  </svg>
+                  <img className="topbar-icon-image" src={moonIcon} alt="" />
                 ) : (
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="4" />
@@ -726,9 +736,7 @@ function App() {
                 className="secondary-button topbar-button"
                 href="#files"
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
-                </svg>
+                <img className="topbar-action-image" src={uploadIcon} alt="" />
                 Upload files
               </a>
             </div>

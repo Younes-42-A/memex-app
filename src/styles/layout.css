@@ -250,9 +250,56 @@
   color: var(--text-sidebar-muted);
 }
 
+.sidebar-note {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: auto;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+}
+
+.sidebar-note::after {
+  position: absolute;
+  z-index: -1;
+  inset-inline-end: -20%;
+  inset-block-end: -50%;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, var(--accent-soft), transparent 70%);
+  content: "";
+}
+
+.sidebar-note-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 8px;
+  background: var(--accent);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.sidebar-note strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.sidebar-note p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
 .sidebar-profile {
   position: relative;
-  margin-top: auto;
+  margin-top: 12px;
   padding: 11px 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -288,10 +335,11 @@
 }
 
 .main-content {
+  box-sizing: border-box;
   max-width: none;
   min-height: 100vh;
   margin-inline-start: 200px;
-  padding: 0 28px 22px 35px;
+  padding: 0 28px 6px 35px;
 }
 
 .topbar {
@@ -415,6 +463,20 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.6;
+}
+
+.topbar-icon-image {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.topbar-action-image {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .icon-button:focus-visible,
@@ -629,6 +691,7 @@
   }
 
 .nav-caption,
+.sidebar-note,
 .sidebar-storage,
 .sidebar-profile {
     display: none;
