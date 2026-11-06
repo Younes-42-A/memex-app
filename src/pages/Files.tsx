@@ -1,5 +1,4 @@
 /* Renders uploaded files and workspace storage usage. */
-import type { ChangeEvent, RefObject } from 'react'
 import type { interfaceText } from '../i18n'
 import type { Course, StudyFile } from '../types'
 import { formatSize } from '../utils/format'
@@ -14,10 +13,8 @@ type FilesProps = {
   storagePercent: number
   courses: Course[]
   visibleFiles: StudyFile[]
-  fileInputRef: RefObject<HTMLInputElement | null>
   onShowAll: () => void
   onChooseFiles: () => void
-  onUpload: (event: ChangeEvent<HTMLInputElement>) => void
   onRemoveFile: (file: StudyFile) => void
 }
 
@@ -31,10 +28,8 @@ export default function Files({
   storagePercent,
   courses,
   visibleFiles,
-  fileInputRef,
   onShowAll,
   onChooseFiles,
-  onUpload,
   onRemoveFile,
 }: FilesProps) {
   return (
@@ -53,14 +48,6 @@ export default function Files({
           <button className="primary-button" type="button" disabled={!workspaceLoaded || storageRemaining === 0} onClick={onChooseFiles}>
             {text.addFiles}
           </button>
-          <input
-            ref={fileInputRef}
-            className="visually-hidden"
-            type="file"
-            multiple
-            aria-label="Choose study files"
-            onChange={onUpload}
-          />
         </div>
       </div>
 

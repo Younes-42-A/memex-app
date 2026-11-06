@@ -22,8 +22,8 @@ export type CourseForm = {
   instructor: string
 }
 
-export type PageName = 'dashboard' | 'feed' | 'courses' | 'files' | 'profile' | 'ask-axi' | 'settings'
-export type HomePage = Exclude<PageName, 'feed' | 'courses' | 'files' | 'profile' | 'settings'>
+export type PageName = 'dashboard' | 'feed' | 'repository-create' | 'repository-files' | 'courses' | 'files' | 'profile' | 'ask-axi' | 'settings'
+export type HomePage = Exclude<PageName, 'feed' | 'repository-create' | 'repository-files' | 'courses' | 'files' | 'profile' | 'settings'>
 export type AnswerStyle = 'balanced' | 'concise' | 'step-by-step'
 export type Theme = 'dark' | 'light'
 export type SettingsSection = 'account' | 'appearance' | 'accessibility' | 'notifications' | 'study' | 'data'

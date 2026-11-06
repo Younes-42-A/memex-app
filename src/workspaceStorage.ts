@@ -16,8 +16,27 @@ export type StoredFile = {
   blob: Blob
 }
 
+export type StoredRepository = {
+  id: string
+  name: string
+  description: string
+  language: string
+  createdAt: number
+}
+
+export type StoredRepositoryFile = {
+  id: string
+  repositoryId: string
+  name: string
+  type: string
+  lastModified: number
+  size: number
+  addedAt: number
+  blob: Blob
+}
+
 const databaseName = 'memex-workspace'
-const databaseVersion = 1
+const databaseVersion = 2
 let databasePromise: Promise<IDBDatabase> | undefined
 
 function openDatabase() {
@@ -36,6 +55,12 @@ function openDatabase() {
         }
         if (!database.objectStoreNames.contains('files')) {
           database.createObjectStore('files', { keyPath: 'id' })
+        }
+        if (!database.objectStoreNames.contains('repositories')) {
+          database.createObjectStore('repositories', { keyPath: 'id' })
+        }
+        if (!database.objectStoreNames.contains('repositoryFiles')) {
+          database.createObjectStore('repositoryFiles', { keyPath: 'id' })
         }
       })
 
@@ -87,6 +112,43 @@ export async function saveCourse(course: StoredCourse) {
   const transaction = database.transaction('courses', 'readwrite')
   const completed = transactionComplete(transaction)
   transaction.objectStore('courses').put(course)
+  await completed
+}
+
+export async function loadRepositories() {
+  const database = await openDatabase()
+  const transaction = database.transaction(['repositories', 'repositoryFiles'], 'readonly')
+  const completed = transactionComplete(transaction)
+  const repositoriesRequest = transaction.objectStore('repositories').getAll() as IDBRequest<StoredRepository[]>
+  const filesRequest = transaction.objectStore('repositoryFiles').getAll() as IDBRequest<StoredRepositoryFile[]>
+  const [repositories, files] = await Promise.all([
+    new Promise<StoredRepository[]>((resolve, reject) => {
+      repositoriesRequest.addEventListener('success', () => resolve(repositoriesRequest.result), { once: true })
+      repositoriesRequest.addEventListener('error', () => reject(repositoriesRequest.error), { once: true })
+    }),
+    new Promise<StoredRepositoryFile[]>((resolve, reject) => {
+      filesRequest.addEventListener('success', () => resolve(filesRequest.result), { once: true })
+      filesRequest.addEventListener('error', () => reject(filesRequest.error), { once: true })
+    }),
+    completed,
+  ])
+  return { repositories, files }
+}
+
+export async function saveRepository(repository: StoredRepository) {
+  const database = await openDatabase()
+  const transaction = database.transaction('repositories', 'readwrite')
+  const completed = transactionComplete(transaction)
+  transaction.objectStore('repositories').put(repository)
+  await completed
+}
+
+export async function saveRepositoryFiles(files: StoredRepositoryFile[]) {
+  const database = await openDatabase()
+  const transaction = database.transaction('repositoryFiles', 'readwrite')
+  const completed = transactionComplete(transaction)
+  const store = transaction.objectStore('repositoryFiles')
+  files.forEach((file) => store.put(file))
   await completed
 }
 

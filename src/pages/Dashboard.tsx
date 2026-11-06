@@ -1,12 +1,8 @@
 /* Dashboard page: welcome, statistics, two summary panels, and the AXI assistant card. */
-import type { Language, interfaceText } from '../i18n'
+import type { interfaceText } from '../i18n'
 
 type DashboardProps = {
   text: typeof interfaceText.en
-  language: Language
-  now: Date
-  greeting: string
-  username: string
   courses: number
   files: number
   visibleFiles: number
@@ -18,10 +14,6 @@ type DashboardProps = {
 
 export default function Dashboard({
   text,
-  language,
-  now,
-  greeting,
-  username,
   courses,
   files,
   visibleFiles,
@@ -32,14 +24,6 @@ export default function Dashboard({
 }: DashboardProps) {
   return (
     <>
-      <section className="welcome-section" aria-labelledby="welcome-title">
-        <div>
-          <p className="eyebrow">{now.toLocaleDateString(language, { dateStyle: 'full' })}</p>
-          <h1 id="welcome-title">{greeting}, {username} <span aria-hidden="true">✦</span></h1>
-          <p className="welcome-copy">{text.buildSpace}</p>
-        </div>
-      </section>
-
       <section className="stats-grid" aria-label={text.summary}>
         <a className="stat-card stat-card-link" href="#courses" aria-label={`${text.courses}: ${courses}`}>
           <span className="stat-icon icon-blue" aria-hidden="true">▦</span>

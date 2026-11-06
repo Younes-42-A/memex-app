@@ -47,7 +47,8 @@ function toAnswerStyle(value: string): AnswerStyle {
 
 function getPageFromHash(defaultPage: HomePage = 'dashboard'): PageName {
   const page = window.location.hash.slice(1)
-  return page === 'feed' || page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
+  return page === 'feed' || page === 'repository-create' || page === 'repository-files'
+    || page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
     ? page
     : defaultPage
 }
@@ -457,9 +458,9 @@ function App() {
             {text.overview}
           </a>
           <a
-            className={`nav-item${activeSection === 'feed' ? ' active' : ''}`}
+            className={`nav-item${activeSection === 'feed' || activeSection === 'repository-create' || activeSection === 'repository-files' ? ' active' : ''}`}
             href="#feed"
-            aria-current={activeSection === 'feed' ? 'page' : undefined}
+            aria-current={activeSection === 'feed' || activeSection === 'repository-create' || activeSection === 'repository-files' ? 'page' : undefined}
           >
             <span className="nav-icon" aria-hidden="true">
               <i className="fa-solid fa-rss"></i>
@@ -658,45 +659,94 @@ function App() {
 
       <main className="main-content">
         <header className="topbar">
-          <p>
-            {activeSection === 'courses'
-              ? text.courses
-              : activeSection === 'files'
-                ? text.files
-                : activeSection === 'profile'
-                  ? text.profile
-                  : activeSection === 'feed'
-                    ? 'Feed'
-                    : activeSection === 'ask-axi'
-                      ? text.askAxi
-                      : activeSection === 'settings'
-                        ? text.settings
-                        : text.overview}
-          </p>
-          <div className="topbar-actions">
-            <span className="semester-pill">
-              <span className="status-dot" aria-hidden="true" />
-              {text.workspace}
-            </span>
-            <a
-              className={`topbar-settings${activeSection === 'settings' ? ' active' : ''}`}
-              href="#settings"
-              aria-label="Open settings"
-              aria-current={activeSection === 'settings' ? 'page' : undefined}
-            >
-              <span aria-hidden="true">⚙</span>
-              <span>{text.settings}</span>
-            </a>
+          <div className="topbar-heading">
+            <p>
+              {activeSection === 'courses'
+                ? text.courses
+                : activeSection === 'files'
+                  ? text.files
+                  : activeSection === 'profile'
+                    ? text.profile
+                    : activeSection === 'feed'
+                      ? 'Feed'
+                      : activeSection === 'repository-create'
+                        ? text.createRepository
+                        : activeSection === 'repository-files'
+                          ? text.addFilesToRepository
+                      : activeSection === 'ask-axi'
+                        ? text.askAxi
+                        : activeSection === 'settings'
+                          ? text.settings
+                          : text.overview}
+            </p>
+            <div className="topbar-icons">
+              <button className="icon-button" type="button" aria-label={text.notifications}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                  <path d="M10 21h4" />
+                </svg>
+              </button>
+              <button
+                className="icon-button"
+                type="button"
+                aria-label={text.theme}
+                aria-pressed={preferences.theme === 'dark'}
+                onClick={() => updatePreferences({ theme: preferences.theme === 'dark' ? 'light' : 'dark' })}
+              >
+                {preferences.theme === 'dark' ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
+          <div className={`topbar-secondary-row${activeSection === 'dashboard' ? ' has-welcome' : ''}`}>
+            {activeSection === 'dashboard' && (
+              <section className="topbar-welcome" aria-labelledby="welcome-title" dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}>
+                <p className="eyebrow">{now.toLocaleDateString(preferences.language, { dateStyle: 'full' })}</p>
+                <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">✦</span></h1>
+                <p className="welcome-copy">{text.buildSpace}</p>
+              </section>
+            )}
+            <div className="topbar-actions">
+              <button
+                className="primary-button topbar-button"
+                type="button"
+                onClick={() => { window.location.hash = 'repository-create' }}
+              >
+                <span aria-hidden="true">+</span> {text.createRepository}
+              </button>
+              <button
+                className="secondary-button topbar-button"
+                type="button"
+                onClick={() => { window.location.hash = 'repository-files' }}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
+                </svg>
+                {text.addFilesToRepository}
+              </button>
+            </div>
+          </div>
+          <input
+            ref={fileInputRef}
+            className="visually-hidden"
+            type="file"
+            multiple
+            aria-label={text.chooseFiles}
+            onChange={handleUpload}
+          />
         </header>
 
         {activeSection === 'dashboard' && (
           <Dashboard
             text={text}
-            language={preferences.language}
-            now={now}
-            greeting={getGreeting(now, preferences.language)}
-            username={username}
             courses={courses.length}
             files={files.length}
             visibleFiles={visibleFiles.length}
@@ -752,7 +802,12 @@ function App() {
           />
         )}
 
-        {activeSection === 'feed' && <Feed />}
+        {(activeSection === 'feed' || activeSection === 'repository-create' || activeSection === 'repository-files') && (
+          <Feed
+            requestedAction={activeSection === 'repository-create' ? 'create-repository' : activeSection === 'repository-files' ? 'add-files' : null}
+            onActionHandled={() => { window.location.hash = 'feed' }}
+          />
+        )}
 
                 {activeSection === 'courses' && (
           <Courses
@@ -785,10 +840,8 @@ function App() {
             storagePercent={storagePercent}
             courses={courses}
             visibleFiles={visibleFiles}
-            fileInputRef={fileInputRef}
             onShowAll={() => setSelectedCourseCode(null)}
             onChooseFiles={() => fileInputRef.current?.click()}
-            onUpload={handleUpload}
             onRemoveFile={handleRemoveFile}
           />
         )}

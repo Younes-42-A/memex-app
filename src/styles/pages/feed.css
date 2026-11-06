@@ -16,6 +16,22 @@
   color: var(--text);
 }
 
+.feed-back-link {
+  color: var(--text-accent);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.feed-back-link:hover {
+  color: var(--text-accent-hover);
+  text-decoration: underline;
+}
+
+.feed-back-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .feed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -55,6 +71,92 @@
 .feed-empty {
   color: var(--muted);
 }
+
+.feed-action-panel {
+  display: grid;
+  max-width: 560px;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface);
+}
+
+.feed-action-panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.feed-action-panel label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.feed-action-panel input,
+.feed-action-panel textarea,
+.feed-action-panel select {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-control);
+  color: var(--text);
+  font: inherit;
+}
+
+.feed-action-panel textarea {
+  resize: vertical;
+}
+
+.feed-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feed-form-actions .primary-button {
+  margin-top: 0;
+}
+
+.feed-form-actions .secondary-button {
+  padding: 0 14px;
+  border-radius: 9px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.feed-form-actions button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.feed-status {
+  color: var(--text-status-message);
+  font-size: 12px;
+}
+
+.feed-file-count {
+  margin: 4px 0 0;
+  color: var(--text-accent);
+  font-size: 11px;
+}
+
+@media (max-width: 580px) {
+  .feed-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .feed-search {
+    width: 100%;
+  }
+}
+
 .primary-button {
   display: inline-flex;
   align-items: center;
