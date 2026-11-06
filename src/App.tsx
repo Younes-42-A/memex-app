@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-
 import memexLogo from './assets/Memex.png'
 import {
   deleteCourseAndUnassignFiles,
@@ -444,6 +443,7 @@ function App() {
           </span>
           <span>
             <small>{text.universityWorkspace}</small>
+            <small className="brand-tagline">Learn • Organize • Achieve</small>
           </span>
         </a>
 
@@ -543,6 +543,7 @@ function App() {
               <strong>{username}</strong>
               <small>{text.student}</small>
             </span>
+            <span className="sidebar-profile-chevron" aria-hidden="true">⌄</span>
           </button>
           {profilePopoverOpen && (
             <section className="profile-popover" role="dialog" aria-label={`${username}'s profile preview`}>
@@ -706,14 +707,22 @@ function App() {
               </button>
             </div>
           </div>
-          <div className={`topbar-secondary-row${activeSection === 'dashboard' ? ' has-welcome' : ''}`}>
-            {activeSection === 'dashboard' && (
-              <section className="topbar-welcome" aria-labelledby="welcome-title" dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}>
-                <p className="eyebrow">{now.toLocaleDateString(preferences.language, { dateStyle: 'full' })}</p>
-                <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">✦</span></h1>
-                <p className="welcome-copy">{text.buildSpace}</p>
-              </section>
-            )}
+          <input
+            ref={fileInputRef}
+            className="visually-hidden"
+            type="file"
+            multiple
+            aria-label={text.chooseFiles}
+            onChange={handleUpload}
+          />
+        </header>
+        {activeSection === 'dashboard' && (
+          <div className="topbar-secondary-row has-welcome">
+            <section className="topbar-welcome" aria-labelledby="welcome-title" dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}>
+              <p className="eyebrow">{now.toLocaleDateString(preferences.language, { dateStyle: 'full' })}</p>
+              <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">✦</span></h1>
+              <p className="welcome-copy">{text.buildSpace}</p>
+            </section>
             <div className="topbar-actions">
               <button
                 className="primary-button topbar-button"
@@ -734,15 +743,7 @@ function App() {
               </button>
             </div>
           </div>
-          <input
-            ref={fileInputRef}
-            className="visually-hidden"
-            type="file"
-            multiple
-            aria-label={text.chooseFiles}
-            onChange={handleUpload}
-          />
-        </header>
+        )}
 
         {activeSection === 'dashboard' && (
           <Dashboard
