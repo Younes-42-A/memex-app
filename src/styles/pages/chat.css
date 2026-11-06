@@ -339,7 +339,7 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 
 .app-shell[data-theme='light'] .ask-select:hover,
 .app-shell[data-theme='light'] .ask-select:focus-within {
-  border-color: #806be5;
+  border-color: var(--border-settings-trigger-hover);
   background: #ffffff;
 }
 
@@ -381,7 +381,7 @@ to { opacity: 1; transform: translateY(0) scale(1); }
   border-color: #cbd2dd;
   background: #ffffff;
   color: #252a33;
-  caret-color: #5941c1;
+  caret-color: var(--accent);
 }
 
 .app-shell[data-theme='light'] .ask-composer textarea::placeholder {
@@ -395,9 +395,9 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .app-shell[data-theme='light'] .chat-attach-button:hover {
-  border-color: #b8aaf0;
-  background: #eeebff;
-  color: #5941c1;
+  border-color: var(--border-accent);
+  background: var(--surface-selected);
+  color: var(--text-accent);
 }
 
 .app-shell[data-theme='light'] .chat-attachment-chip {
@@ -1143,8 +1143,8 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .app-shell[data-theme='light'] .chat-settings-choice.selected {
-  border-color: #7560d6;
-  background: #f3f0ff;
+  border-color: var(--border-accent);
+  background: var(--surface-selected-raised);
 }
 
 .app-shell[data-theme='light'] .chat-history-item,
@@ -1155,12 +1155,12 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 
 .app-shell[data-theme='light'] .chat-history-row:hover,
 .app-shell[data-theme='light'] .chat-history-row.active {
-  background: #f0edff;
+  background: var(--surface-hover);
 }
 
 .app-shell[data-theme='light'] .chat-history-row:hover .chat-history-item,
 .app-shell[data-theme='light'] .chat-history-row.active .chat-history-item {
-  color: #5941c1;
+  color: var(--text-nav-state);
 }
 
 .app-shell[data-theme='light'] .chat-history-delete:hover {
@@ -1169,18 +1169,18 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .app-shell[data-theme='light'] .chat-history-rename:hover {
-  background: #eeebff;
-  color: #5941c1;
+  background: var(--surface-hover);
+  color: var(--text-accent);
 }
 
 .app-shell[data-theme='light'] .chat-history-rename-form input {
-  border-color: #b8aaf0;
+  border-color: var(--border-accent);
   background: #fff;
   color: #303846;
 }
 
 .app-shell[data-theme='light'] .chat-history-rename-save {
-  color: #5941c1;
+  color: var(--text-accent);
 }
 
 .app-shell[data-theme='light'] .chat-history-row,
@@ -1190,7 +1190,7 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 
 .app-shell[data-theme='light'] .chat-history-row:hover .chat-history-item,
 .app-shell[data-theme='light'] .chat-history-row.active .chat-history-item {
-  color: #5941c1;
+  color: var(--text-nav-state);
 }
 
 .app-shell[data-theme='light'] .chat-history-group h2,
@@ -1247,9 +1247,9 @@ to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .app-shell[data-theme='light'] .chat-new-button {
-  border-color: #c7bdf2;
-  background: #f3f0ff;
-  color: #5941c1;
+  border-color: var(--border-accent);
+  background: var(--surface-selected-raised);
+  color: var(--text-accent);
 }
 
 @media (max-width: 1000px) {

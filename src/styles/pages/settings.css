@@ -444,8 +444,8 @@
 
 .app-shell[data-theme='light'] .settings-card-icon,
 .app-shell[data-theme='light'] .settings-nav-item.active {
-  background: #eeebff;
-  color: #5941c1;
+  background: var(--surface-settings-nav-active);
+  color: var(--text-settings-nav-state);
 }
 
 .app-shell[data-theme='light'] .settings-field,

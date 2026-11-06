@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import memexLogo from '../logo.png'
-import lightThemeLogo from './assets/logo-light.png'
+
+import memexLogo from './assets/Memex-transparent.png'
 import {
   deleteCourseAndUnassignFiles,
   deleteFile as deleteStoredFile,
@@ -438,7 +438,7 @@ function App() {
       <aside className="sidebar" aria-label={text.menu}>
         <a className="brand" href="#dashboard" aria-label="Memex - Home">
           <span className="brand-mark" aria-hidden="true">
-            <img src={preferences.theme === 'light' ? lightThemeLogo : memexLogo} alt="" />
+            <img src={memexLogo} alt="" />
           </span>
           <span>
             <small>{text.universityWorkspace}</small>
@@ -483,11 +483,6 @@ function App() {
             <span className="nav-icon" aria-hidden="true">✦</span>
             {text.askAxi}
           </a>
-          <button className="nav-item nav-item-disabled" type="button" disabled aria-disabled="true" title="Coming soon">
-            <span className="nav-icon" aria-hidden="true">↻</span>
-            Review weaknesses
-            <span className="nav-coming-soon">Soon</span>
-          </button>
           <a
             className={`nav-item${activeSection === 'settings' ? ' active' : ''}`}
             href="#settings"

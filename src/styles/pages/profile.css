@@ -145,7 +145,7 @@
   border-color: #cbd2dd;
   background: #ffffff;
   color: #252a33;
-  caret-color: #5941c1;
+  caret-color: var(--accent);
 }
 
 .app-shell[data-theme='light'] .profile-bio-field textarea::placeholder {

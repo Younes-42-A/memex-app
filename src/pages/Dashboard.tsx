@@ -1,6 +1,5 @@
-/* Renders the dashboard welcome section, workspace statistics, and shortcuts. */
-import type { Language } from '../i18n'
-import type { interfaceText } from '../i18n'
+/* Dashboard page: welcome, statistics, two summary panels, and the AXI assistant card. */
+import type { Language, interfaceText } from '../i18n'
 
 type DashboardProps = {
   text: typeof interfaceText.en
@@ -77,23 +76,48 @@ export default function Dashboard({
           </div>
         </article>
       </section>
-      <section className="dashboard-shortcuts" aria-label={text.workspacePages}>
-        <a className="shortcut-card" href="#courses">
-          <span className="shortcut-icon" aria-hidden="true">▦</span>
-          <span>
-            <strong>{text.manageCourses}</strong>
-            <small>{courses} {courses === 1 ? 'course' : 'courses'} in your workspace</small>
-          </span>
-          <span className="shortcut-arrow" aria-hidden="true">→</span>
-        </a>
-        <a className="shortcut-card" href="#files">
-          <span className="shortcut-icon" aria-hidden="true">▤</span>
-          <span>
-            <strong>{text.manageFiles}</strong>
-            <small>{files} {files === 1 ? 'file' : 'files'} in your workspace</small>
-          </span>
-          <span className="shortcut-arrow" aria-hidden="true">→</span>
-        </a>
+
+      <section className="dashboard-panels" aria-label={text.workspacePages}>
+        <article className="panel">
+          <header className="panel-heading">
+            <h2>My courses</h2>
+            <a href="#courses">View all →</a>
+          </header>
+          <p className="panel-count">{courses} {courses === 1 ? 'course' : 'courses'}</p>
+          {courses === 0 && (
+            <div className="panel-empty">
+              <strong>No courses yet</strong>
+              <p>Add your first course to organize your studies.</p>
+              <a className="primary-button" href="#courses">+ Add course</a>
+            </div>
+          )}
+        </article>
+
+        <article className="panel">
+          <header className="panel-heading">
+            <h2>Recent files</h2>
+            <a href="#files">View all →</a>
+          </header>
+          <p className="panel-count">{files} {files === 1 ? 'file' : 'files'}</p>
+          {files === 0 && (
+            <div className="panel-empty">
+              <strong>No recent files yet</strong>
+              <p>Upload your first study file for quick access.</p>
+              <a className="primary-button" href="#files">Upload files</a>
+            </div>
+          )}
+        </article>
+      </section>
+
+      <section className="axi-card" aria-labelledby="axi-title">
+        <div className="axi-info">
+          <span className="axi-icon" aria-hidden="true">✦</span>
+          <div>
+            <h2 id="axi-title">AXI</h2>
+            <p>Your study assistant for questions and explanations.</p>
+          </div>
+        </div>
+        <a className="primary-button" href="#ask-axi">Ask AXI →</a>
       </section>
     </>
   )
