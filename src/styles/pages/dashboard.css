@@ -379,7 +379,7 @@
   width: 100%;
 }
 .panel {
-  min-height: 280px;
+  min-height: 272px;
   box-shadow: var(--shadow-card);
   overflow: hidden;
   position: relative;
@@ -397,23 +397,25 @@
 }
 
 .stat-card {
-  min-height: 136px;
+  min-height: 120px;
   align-items: flex-start;
-  border-radius: var(--radius);
+  padding: 24px;
+  border-radius: 16px;
   box-shadow: var(--shadow-card);
 }
 
-.stat-icon,
-.panel-icon,
-.panel-empty-icon {
-  width: 42px;
-  height: 42px;
+.stat-icon {
+  width: 44px;
+  height: 44px;
   flex: 0 0 auto;
   border-radius: 12px;
 }
 
-.stat-icon {
-  font-size: 20px;
+.panel-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 12px;
 }
 
 .icon-orange {
@@ -432,7 +434,7 @@
 }
 
 .dashboard-panels {
-  gap: 20px;
+  gap: 24px;
   margin-top: 24px;
 }
 
@@ -465,23 +467,28 @@
 
 .panel {
   gap: 16px;
-  min-height: 280px;
+  min-height: 272px;
   padding: 24px;
+  border-radius: 16px;
 }
 
 .panel-empty {
   flex: 1;
   align-content: center;
   justify-items: center;
-  gap: 10px;
+  gap: 8px;
   margin: 0;
-  padding: 20px 12px;
+  padding: 0 12px;
 }
 
 .panel-empty-icon {
   display: grid;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
   place-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  border-radius: 14px;
   font-size: 20px;
 }
 
@@ -507,10 +514,10 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: 150px;
+  min-height: 98px;
   margin-top: 24px;
-  padding: 32px;
-  border-radius: var(--radius);
+  padding: 24px;
+  border-radius: 16px;
   background: var(--surface-raised);
   box-shadow: var(--shadow-card);
 }
