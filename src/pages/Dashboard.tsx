@@ -19,14 +19,18 @@ export default function Dashboard({
   visibleFiles,
   selectedCourseCode,
   storageUsed,
-  storageRemaining,
   storagePercent,
 }: DashboardProps) {
   return (
     <>
       <section className="stats-grid" aria-label={text.summary}>
         <a className="stat-card stat-card-link" href="#courses" aria-label={`${text.courses}: ${courses}`}>
-          <span className="stat-icon icon-orange" aria-hidden="true">▦</span>
+          <span className="stat-icon icon-orange" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path d="M5 8h9a3 3 0 0 1 3 3v17a3 3 0 0 0-3-3H5V8Zm22 0h-9a3 3 0 0 0-3 3v17a3 3 0 0 1 3-3h9V8Z" />
+              <path d="M8 12v10m4-10v10m12-10v10m-4-10v10" />
+            </svg>
+          </span>
           <div>
             <p>{text.courses}</p>
             <strong>{courses}</strong>
@@ -34,7 +38,12 @@ export default function Dashboard({
           </div>
         </a>
         <a className="stat-card stat-card-link" href="#files" aria-label={`${text.studyFiles}: ${visibleFiles}`}>
-          <span className="stat-icon icon-purple" aria-hidden="true">▤</span>
+          <span className="stat-icon icon-purple" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path d="M8 4h11l7 7v17H8V4Z" />
+              <path d="M19 4v8h7M12 17h10m-10 5h10" />
+            </svg>
+          </span>
           <div>
             <p>{text.studyFiles}</p>
             <strong>{visibleFiles}</strong>
@@ -42,11 +51,18 @@ export default function Dashboard({
           </div>
         </a>
         <article className="stat-card">
-          <span className="stat-icon icon-green" aria-hidden="true">▣</span>
+          <span className="stat-icon icon-green" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <ellipse cx="16" cy="7" rx="10" ry="4" />
+              <path d="M6 7v6c0 2 4.5 4 10 4s10-2 10-4V7m-20 6v6c0 2 4.5 4 10 4s10-2 10-4v-6m-20 6v6c0 2 4.5 4 10 4s10-2 10-4v-6" />
+            </svg>
+          </span>
           <div className="storage-stat-content">
             <p>{text.storage}</p>
-            <strong>{storageUsed}</strong>
-            <small>{storageRemaining} available of 5 GB</small>
+            <div className="storage-value">
+              <strong>{storageUsed}</strong>
+              <small>/ 5 GB</small>
+            </div>
             <div
               className="storage-progress"
               role="progressbar"
@@ -57,6 +73,7 @@ export default function Dashboard({
             >
               <span style={{ width: `${storagePercent}%` }} />
             </div>
+            <span className="storage-percent">{Math.round(storagePercent)}%</span>
           </div>
         </article>
       </section>
@@ -65,7 +82,11 @@ export default function Dashboard({
         <article className="panel">
           <header className="panel-heading">
             <div className="panel-title">
-              <span className="panel-icon icon-orange" aria-hidden="true">▦</span>
+              <span className="panel-icon icon-orange" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 5h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H3V5Zm18 0h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V5Z" />
+                </svg>
+              </span>
               <h2>My courses</h2>
             </div>
             <a href="#courses">View all →</a>
@@ -91,7 +112,12 @@ export default function Dashboard({
         <article className="panel">
           <header className="panel-heading">
             <div className="panel-title">
-              <span className="panel-icon icon-purple" aria-hidden="true">▤</span>
+              <span className="panel-icon icon-purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 3h8l5 5v13H6V3Z" />
+                  <path d="M14 3v6h5M9 13h7m-7 4h7" />
+                </svg>
+              </span>
               <h2>Recent files</h2>
             </div>
             <a href="#files">View all →</a>
@@ -130,7 +156,13 @@ export default function Dashboard({
             <p>Your study assistant for questions and explanations.</p>
           </div>
         </div>
-        <a className="primary-button" href="#ask-axi">Ask AXI →</a>
+        <a className="primary-button" href="#ask-axi">
+          <svg className="axi-button-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L4 20l3.8-.9A8.5 8.5 0 1 0 12 3.5Z" />
+            <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
+          </svg>
+          Ask AXI →
+        </a>
       </section>
     </>
   )

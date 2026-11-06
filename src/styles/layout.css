@@ -21,9 +21,9 @@
   inset-inline-start: 0;
   z-index: 2;
   display: flex;
-  width: 250px;
+  width: 200px;
   flex-direction: column;
-  padding: 28px 18px 18px;
+  padding: 24px 12px 12px;
   border-inline-end: 1px solid var(--line);
   background: var(--sidebar);
 }
@@ -33,7 +33,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  padding: 0 10px 32px;
+  padding: 0 4px 34px;
   color: inherit;
   text-decoration: none;
 }
@@ -97,6 +97,10 @@
   font-weight: 700;
 }
 
+.sidebar > .nav-caption {
+  display: none;
+}
+
 .main-nav {
   display: grid;
   gap: 5px;
@@ -109,7 +113,7 @@
   align-items: center;
   gap: 12px;
   padding: 0 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   color: var(--text-nav);
   font-size: 13px;
   text-decoration: none;
@@ -196,9 +200,9 @@
 
 .sidebar-storage {
   display: grid;
-  width: calc(100% - 4px);
+  width: 100%;
   gap: 9px;
-  margin: 14px 2px 0;
+  margin: 14px 0 0;
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 11px;
@@ -286,8 +290,8 @@
 .main-content {
   max-width: none;
   min-height: 100vh;
-  margin-inline-start: 250px;
-  padding: 0 40px 22px;
+  margin-inline-start: 200px;
+  padding: 0 28px 22px 35px;
 }
 
 .topbar {
@@ -326,12 +330,18 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  padding: 32px 0 24px;
+  padding: 32px 0 30px;
   direction: ltr;
 }
 
 .topbar-secondary-row.has-welcome {
   justify-content: space-between;
+  padding-inline-start: 10px;
+}
+
+.topbar-secondary-row.has-welcome .topbar-welcome,
+.topbar-secondary-row.has-welcome .topbar-actions {
+  transform: translateY(-6px);
 }
 
 .topbar-welcome {
@@ -347,10 +357,10 @@
 .topbar-welcome h1 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(32px, 3.4vw, 44px);
+  font-size: clamp(32px, 2.6vw, 36px);
   font-weight: 800;
-  letter-spacing: -1.2px;
-  line-height: 1.05;
+  letter-spacing: -0.8px;
+  line-height: 1.1;
 }
 
 .topbar-welcome h1 span {
@@ -361,7 +371,7 @@
 .topbar-welcome .welcome-copy {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.4;
 }
 
@@ -428,13 +438,19 @@
 }
 
 .topbar-actions .topbar-button {
-  padding: 0 16px;
+  gap: 8px;
+  padding: 0 30px;
   margin: 0;
+  font-size: 14px;
+}
+
+.topbar-actions {
+  gap: 16px;
 }
 
 .topbar-button svg {
-  width: 13px;
-  height: 13px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -672,4 +688,10 @@
     padding-inline: 10px;
     font-size: 11px;
   }
+
+.topbar-actions .topbar-button {
+  gap: 5px;
+  padding-inline: 10px;
+  font-size: 11px;
+}
 }

@@ -159,12 +159,15 @@
 }
 
 [data-theme='dark'] {
-  --bg: #0e0d0d;
-  --bg-glow: rgba(120, 28, 20, 0.14);
-  --surface: #171413;
-  --surface-raised: #1b1715;
-  --surface-inset: #100f0e;
-  --sidebar: #141211;
+  --bg: #101011;
+  --bg-glow: rgba(255, 106, 26, 0.1);
+  --surface: #171719;
+  --surface-raised: #1b1b1e;
+  --surface-inset: #111112;
+  --sidebar: #111112;
+  --surface-card: #171719;
+  --line: #29292e;
+  --line-strong: #393940;
   --text: #f5eeeb;
   --text-soft: #c5b8b2;
   --muted: #b7aaa4;
