@@ -719,28 +719,25 @@ function App() {
         {activeSection === 'dashboard' && (
           <div className="topbar-secondary-row has-welcome">
             <section className="topbar-welcome" aria-labelledby="welcome-title" dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}>
-              <p className="eyebrow">{now.toLocaleDateString(preferences.language, { dateStyle: 'full' })}</p>
-              <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">✦</span></h1>
+              <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">👋</span></h1>
               <p className="welcome-copy">{text.buildSpace}</p>
             </section>
             <div className="topbar-actions">
-              <button
+              <a
                 className="primary-button topbar-button"
-                type="button"
-                onClick={() => { window.location.hash = 'repository-create' }}
+                href="#courses"
               >
-                <span aria-hidden="true">+</span> {text.createRepository}
-              </button>
-              <button
+                <span aria-hidden="true">+</span> Add course
+              </a>
+              <a
                 className="secondary-button topbar-button"
-                type="button"
-                onClick={() => { window.location.hash = 'repository-files' }}
+                href="#files"
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
                 </svg>
-                {text.addFilesToRepository}
-              </button>
+                Upload files
+              </a>
             </div>
           </div>
         )}
