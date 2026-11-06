@@ -26,7 +26,7 @@ export default function Dashboard({
     <>
       <section className="stats-grid" aria-label={text.summary}>
         <a className="stat-card stat-card-link" href="#courses" aria-label={`${text.courses}: ${courses}`}>
-          <span className="stat-icon icon-blue" aria-hidden="true">▦</span>
+          <span className="stat-icon icon-orange" aria-hidden="true">▦</span>
           <div>
             <p>{text.courses}</p>
             <strong>{courses}</strong>
@@ -34,7 +34,7 @@ export default function Dashboard({
           </div>
         </a>
         <a className="stat-card stat-card-link" href="#files" aria-label={`${text.studyFiles}: ${visibleFiles}`}>
-          <span className="stat-icon icon-orange" aria-hidden="true">▤</span>
+          <span className="stat-icon icon-purple" aria-hidden="true">▤</span>
           <div>
             <p>{text.studyFiles}</p>
             <strong>{visibleFiles}</strong>
@@ -64,12 +64,16 @@ export default function Dashboard({
       <section className="dashboard-panels" aria-label={text.workspacePages}>
         <article className="panel">
           <header className="panel-heading">
-            <h2>My courses</h2>
+            <div className="panel-title">
+              <span className="panel-icon icon-orange" aria-hidden="true">▦</span>
+              <h2>My courses</h2>
+            </div>
             <a href="#courses">View all →</a>
           </header>
-          <p className="panel-count">{courses} {courses === 1 ? 'course' : 'courses'}</p>
+          {courses > 0 && <p className="panel-count">{courses} {courses === 1 ? 'course' : 'courses'}</p>}
           {courses === 0 && (
             <div className="panel-empty">
+              <span className="panel-empty-icon icon-orange" aria-hidden="true">▦</span>
               <strong>No courses yet</strong>
               <p>Add your first course to organize your studies.</p>
               <a className="primary-button" href="#courses">+ Add course</a>
@@ -79,12 +83,16 @@ export default function Dashboard({
 
         <article className="panel">
           <header className="panel-heading">
-            <h2>Recent files</h2>
+            <div className="panel-title">
+              <span className="panel-icon icon-purple" aria-hidden="true">▤</span>
+              <h2>Recent files</h2>
+            </div>
             <a href="#files">View all →</a>
           </header>
-          <p className="panel-count">{files} {files === 1 ? 'file' : 'files'}</p>
+          {files > 0 && <p className="panel-count">{files} {files === 1 ? 'file' : 'files'}</p>}
           {files === 0 && (
             <div className="panel-empty">
+              <span className="panel-empty-icon icon-purple" aria-hidden="true">▤</span>
               <strong>No recent files yet</strong>
               <p>Upload your first study file for quick access.</p>
               <a className="primary-button" href="#files">Upload files</a>
@@ -95,7 +103,13 @@ export default function Dashboard({
 
       <section className="axi-card" aria-labelledby="axi-title">
         <div className="axi-info">
-          <span className="axi-icon" aria-hidden="true">✦</span>
+          <span className="axi-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8 8.5h8a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-4a3 3 0 0 1 3-3Z" />
+              <path d="M12 5v3.5M9 13h.01M15 13h.01M9 16h6" />
+              <circle cx="12" cy="4" r="1" />
+            </svg>
+          </span>
           <div>
             <h2 id="axi-title">AXI</h2>
             <p>Your study assistant for questions and explanations.</p>
