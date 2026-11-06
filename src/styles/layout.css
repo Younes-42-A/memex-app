@@ -350,6 +350,7 @@
   font-size: clamp(32px, 3.4vw, 44px);
   font-weight: 800;
   letter-spacing: -1.2px;
+  line-height: 1.05;
 }
 
 .topbar-welcome h1 span {
@@ -358,10 +359,10 @@
 }
 
 .topbar-welcome .welcome-copy {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   color: var(--muted);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .topbar-icons,
@@ -424,6 +425,11 @@
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+}
+
+.topbar-actions .topbar-button {
+  padding: 0 16px;
+  margin: 0;
 }
 
 .topbar-button svg {

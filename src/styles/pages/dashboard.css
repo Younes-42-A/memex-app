@@ -488,8 +488,22 @@
   flex: 0 0 auto;
   place-items: center;
   margin-bottom: 2px;
-  border-radius: 14px;
-  font-size: 20px;
+  color: var(--text-soft);
+}
+
+.panel-empty-icon svg {
+  width: 56px;
+  height: 56px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+}
+
+.panel-empty-icon .empty-icon-accent {
+  stroke: var(--accent);
 }
 
 .panel-empty strong {
@@ -497,17 +511,30 @@
 }
 
 .panel-empty p {
-  max-width: 34ch;
+  max-width: 46ch;
   font-size: 13px;
   line-height: 1.6;
 }
 
 .panel-empty .primary-button {
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .stat-card .storage-progress {
-  margin-top: 12px;
+  margin-top: 8px;
+}
+
+.storage-stat-content strong,
+.storage-stat-content small {
+  display: inline-block;
+}
+
+.storage-stat-content strong {
+  margin-inline-end: 8px;
+}
+
+.storage-stat-content small {
+  margin-top: 0;
 }
 
 .axi-card {
@@ -566,6 +593,15 @@
   min-height: 42px;
   padding-inline: 20px;
   font-size: 13px;
+}
+
+.main-content:has(.stats-grid) {
+  padding-bottom: 12px;
+}
+
+.main-content:has(.stats-grid) .status-message:empty,
+.main-content:has(.stats-grid) .page-footer {
+  display: none;
 }
 
 .primary-button,
