@@ -19,3 +19,11 @@
 - [ ] Rename and delete a chat
 - [ ] Chat settings modal
 - [ ] Storage report modal
+
+## Design match checks
+
+- [ ] Compare the near-black surfaces, orange top-right glow, card borders, and text contrast in dark theme.
+- [ ] Compare the sidebar logo, tagline, active navigation indicator, user card, and topbar controls in both themes.
+- [ ] Check dashboard heading/actions, three stats, two empty-state panels, and AXI card in both themes.
+- [ ] Confirm tinted icon tiles and orange buttons remain legible in light theme.
+- [ ] Check the dashboard collapses to one column at widths below 760px.
