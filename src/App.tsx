@@ -442,7 +442,6 @@ function App() {
             <img src={memexLogo} alt="" />
           </span>
           <span>
-            <small>{text.universityWorkspace}</small>
             <small className="brand-tagline">Learn • Organize • Achieve</small>
           </span>
         </a>
@@ -521,12 +520,6 @@ function App() {
           </div>
           <p>{formatSize(storageUsed)} used <span>·</span> {formatSize(storageRemaining)} free</p>
         </button>
-
-        <div className="sidebar-note">
-          <span className="note-sparkle" aria-hidden="true">✦</span>
-          <strong>{text.yourSpace}</strong>
-          <p>{text.organizeSpace}</p>
-        </div>
 
         <div className="sidebar-profile" ref={profileMenuRef}>
           <button
