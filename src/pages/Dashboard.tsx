@@ -73,7 +73,14 @@ export default function Dashboard({
           {courses > 0 && <p className="panel-count">{courses} {courses === 1 ? 'course' : 'courses'}</p>}
           {courses === 0 && (
             <div className="panel-empty">
-              <span className="panel-empty-icon icon-orange" aria-hidden="true">▦</span>
+              <span className="panel-empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64">
+                  <path d="m5 23 27-12 27 12-27 13L5 23Z" />
+                  <path d="M14 28v13c10 7 26 7 36 0V28M59 23v15" />
+                  <circle cx="59" cy="42" r="2" />
+                  <path className="empty-icon-accent" d="m57 22 5-4m-4 11h6m-7 5 5 4" />
+                </svg>
+              </span>
               <strong>No courses yet</strong>
               <p>Add your first course to organize your studies.</p>
               <a className="primary-button" href="#courses">+ Add course</a>
@@ -92,7 +99,15 @@ export default function Dashboard({
           {files > 0 && <p className="panel-count">{files} {files === 1 ? 'file' : 'files'}</p>}
           {files === 0 && (
             <div className="panel-empty">
-              <span className="panel-empty-icon icon-purple" aria-hidden="true">▤</span>
+              <span className="panel-empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64">
+                  <path d="M15 7h23l12 12v25a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V11a4 4 0 0 1 4-4Z" />
+                  <path d="M38 7v12h12M19 27h17M19 34h15M19 41h10" />
+                  <circle cx="45" cy="45" r="11" />
+                  <path d="M45 39v7l5 3" />
+                  <path className="empty-icon-accent" d="m57 27 4-3m-3 9h5m-6 6 4 3" />
+                </svg>
+              </span>
               <strong>No recent files yet</strong>
               <p>Upload your first study file for quick access.</p>
               <a className="primary-button" href="#files">Upload files</a>
