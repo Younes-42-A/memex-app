@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 
-import memexLogo from './assets/Memex-transparent.png'
+import memexLogo from './assets/Memex.png'
 import {
   deleteCourseAndUnassignFiles,
   deleteFile as deleteStoredFile,
@@ -17,6 +17,7 @@ import Files from './pages/Files'
 import ProfilePage from './pages/Profile'
 import Settings from './pages/Settings'
 import AskAxi from './pages/AskAxi'
+import Feed from './pages/Feed'
 import { interfaceText } from './i18n'
 import type {
   AnswerStyle,
@@ -46,7 +47,7 @@ function toAnswerStyle(value: string): AnswerStyle {
 
 function getPageFromHash(defaultPage: HomePage = 'dashboard'): PageName {
   const page = window.location.hash.slice(1)
-  return page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
+  return page === 'feed' || page === 'courses' || page === 'files' || page === 'profile' || page === 'ask-axi' || page === 'settings'
     ? page
     : defaultPage
 }
@@ -455,13 +456,16 @@ function App() {
             <span className="nav-icon" aria-hidden="true">⌂</span>
             {text.overview}
           </a>
-          <button className="nav-item nav-item-disabled" type="button" disabled aria-disabled="true" title="Coming soon">
+          <a
+            className={`nav-item${activeSection === 'feed' ? ' active' : ''}`}
+            href="#feed"
+            aria-current={activeSection === 'feed' ? 'page' : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               <i className="fa-solid fa-rss"></i>
             </span>
             Feed
-            <span className="nav-coming-soon">Soon</span>
-          </button>
+          </a>
           <a
             className={`nav-item${activeSection === 'profile' ? ' active' : ''}`}
             href="#profile"
@@ -661,6 +665,8 @@ function App() {
                 ? text.files
                 : activeSection === 'profile'
                   ? text.profile
+                  : activeSection === 'feed'
+                    ? 'Feed'
                     : activeSection === 'ask-axi'
                       ? text.askAxi
                       : activeSection === 'settings'
@@ -745,6 +751,8 @@ function App() {
             onAttachmentChange={handleChatAttachmentChange}
           />
         )}
+
+        {activeSection === 'feed' && <Feed />}
 
                 {activeSection === 'courses' && (
           <Courses

@@ -10,6 +10,7 @@ import './styles/pages/files.css'
 import './styles/pages/profile.css'
 import './styles/pages/settings.css'
 import './styles/pages/chat.css'
+import './styles/pages/feed.css'
 import './styles/pages/error-register.css'
 import App from './App.tsx'
 
