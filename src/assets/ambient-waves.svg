@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" preserveAspectRatio="none">
+  <path d="M0 180C146 142 246 199 380 175S616 115 800 142v78H0z" fill="#ff6a1a" fill-opacity=".21"/>
+  <path d="M0 202C155 169 270 215 420 190S642 140 800 162v58H0z" fill="#ff8a24" fill-opacity=".14"/>
+  <path d="M0 183C146 145 246 202 380 178S616 118 800 145" fill="none" stroke="#ff8a3d" stroke-opacity=".48" stroke-width="1.4"/>
+  <path d="M0 204C155 171 270 217 420 192S642 142 800 164" fill="none" stroke="#ff9a58" stroke-opacity=".32" stroke-width="1"/>
+</svg>

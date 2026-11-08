@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="top-wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff6a1a" stop-opacity="0"/>
+      <stop offset=".48" stop-color="#ff6a1a" stop-opacity=".085"/>
+      <stop offset=".78" stop-color="#ff8a24" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#ff6a1a" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="lower-wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff6a1a" stop-opacity="0"/>
+      <stop offset=".48" stop-color="#ff6a1a" stop-opacity=".07"/>
+      <stop offset=".8" stop-color="#ff8a24" stop-opacity=".11"/>
+      <stop offset="1" stop-color="#ff6a1a" stop-opacity=".03"/>
+    </linearGradient>
+    <filter id="orange-shadow" x="-12%" y="-35%" width="124%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur"/>
+      <feOffset in="blur" dy="7" result="offset-blur"/>
+      <feFlood flood-color="#ff6a1a" flood-opacity=".3" result="shadow-color"/>
+      <feComposite in="shadow-color" in2="offset-blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M190 220C375 202 480 243 646 211S857 198 1015 139 1292 43 1440 20C1322 111 1175 184 1021 217S778 257 647 244 391 226 190 273Z" fill="url(#top-wave)" filter="url(#orange-shadow)" opacity=".56"/>
+  <path d="M200 225C385 207 485 247 650 216S860 202 1018 143 1295 47 1440 24" fill="none" stroke="#ff9a50" stroke-opacity=".22" stroke-width="1.2"/>
+  <path d="M200 239C390 221 490 260 654 231S864 216 1024 157 1300 62 1440 39" fill="none" stroke="#ff8a24" stroke-opacity=".12" stroke-width="1"/>
+  <path d="M170 660C345 585 472 616 626 583S843 485 1000 465 1285 439 1440 413C1307 498 1167 559 1007 585S760 628 625 615 363 626 170 713Z" fill="url(#lower-wave)" filter="url(#orange-shadow)" opacity=".42"/>
+  <path d="M180 663C350 590 478 620 630 587S848 490 1004 470 1290 445 1440 419" fill="none" stroke="#ff8a24" stroke-opacity=".12" stroke-width="1.2"/>
+  <path d="M170 875C355 817 483 847 635 825S890 734 1054 708 1330 682 1440 666" fill="none" stroke="#f47732" stroke-opacity=".07" stroke-width="1"/>
+</svg>

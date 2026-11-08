@@ -14,43 +14,13 @@ export type WeaknessEntry = {
   lastSeen: string
 }
 
-const initialEntries: WeaknessEntry[] = [
-  {
-    id: 'weakness-1',
-    title: 'Forgetting to check boundary cases',
-    subject: 'Data Structures',
-    category: 'Code',
-    status: 'To review',
-    note: 'Remember to test empty inputs and the first/last array positions.',
-    lastSeen: '2026-10-21T12:00:00.000Z',
-  },
-  {
-    id: 'weakness-2',
-    title: 'Confusing correlation with causation',
-    subject: 'Statistics',
-    category: 'Conceptual',
-    status: 'Practicing',
-    note: 'A relationship between variables does not by itself prove causality.',
-    lastSeen: '2026-10-19T12:00:00.000Z',
-  },
-  {
-    id: 'weakness-3',
-    title: 'Sign error in integration',
-    subject: 'Calculus II',
-    category: 'Calculation',
-    status: 'Mastered',
-    note: 'Recheck the sign when applying substitution and evaluating limits.',
-    lastSeen: '2026-10-16T12:00:00.000Z',
-  },
-]
-
 type ErrorRegisterViewProps = {
   initialItems?: WeaknessEntry[]
   loading?: boolean
   error?: string | null
 }
 
-export default function ErrorRegisterView({ initialItems = initialEntries, loading = false, error = null }: ErrorRegisterViewProps) {
+export default function ErrorRegisterView({ initialItems = [], loading = false, error = null }: ErrorRegisterViewProps) {
   const [entries, setEntries] = useState(initialItems)
   const [subjectFilter, setSubjectFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')

@@ -9,6 +9,7 @@ type CoursesProps = {
   files: Array<{ courseCode: string }>
   selectedCourseCode: string | null
   workspaceLoaded: boolean
+  workspaceLoadError: boolean
   courseFormOpen: boolean
   courseForm: CourseForm
   onToggleForm: () => void
@@ -16,6 +17,7 @@ type CoursesProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onSelectCourse: (courseCode: string) => void
   onRemoveCourse: (course: Course) => void
+  onRetryLoad: () => void
 }
 
 export default function Courses({
@@ -24,6 +26,7 @@ export default function Courses({
   files,
   selectedCourseCode,
   workspaceLoaded,
+  workspaceLoadError,
   courseFormOpen,
   courseForm,
   onToggleForm,
@@ -31,6 +34,7 @@ export default function Courses({
   onSubmit,
   onSelectCourse,
   onRemoveCourse,
+  onRetryLoad,
 }: CoursesProps) {
   return (
     <section className="content-section" aria-labelledby="courses-title">
@@ -39,7 +43,7 @@ export default function Courses({
           <p className="section-kicker">{text.learningSpace}</p>
           <h2 id="courses-title">{text.courses}</h2>
         </div>
-        <button className="primary-button" type="button" disabled={!workspaceLoaded} onClick={onToggleForm}>
+        <button className="primary-button" type="button" disabled={!workspaceLoaded || workspaceLoadError} onClick={onToggleForm}>
           {!workspaceLoaded ? text.loading : courseFormOpen ? text.cancel : text.addCourse}
         </button>
       </div>
@@ -76,7 +80,13 @@ export default function Courses({
         </form>
       )}
 
-      {!workspaceLoaded ? (
+      {workspaceLoadError ? (
+        <div className="empty-state workspace-error-state" role="alert">
+          <strong>{text.workspaceLoadError}</strong>
+          <p>{text.savedDataUnavailable}</p>
+          <button className="secondary-button" type="button" onClick={onRetryLoad}>{text.retry}</button>
+        </div>
+      ) : !workspaceLoaded ? (
         <div className="empty-state"><strong>{text.loading}</strong></div>
       ) : courses.length > 0 ? (
         <div className="course-grid">

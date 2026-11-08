@@ -364,3 +364,13 @@
     grid-row: 1;
   }
 }
+
+.app-shell[data-theme='dark'] .storage-summary,
+.app-shell[data-theme='dark'] .file-list {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.04), transparent 64%);
+}
+
+.app-shell[data-theme='light'] .storage-summary,
+.app-shell[data-theme='light'] .file-list {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(71, 85, 105, 0.03), transparent 66%);
+}

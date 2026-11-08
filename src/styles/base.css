@@ -38,8 +38,28 @@ input {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(251, 122, 36, 0.55);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select,
+textarea {
+  accent-color: var(--accent);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--accent);
 }
 
 .visually-hidden {

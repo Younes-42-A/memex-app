@@ -199,3 +199,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+.app-shell[data-theme='dark'] .course-card {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.045), transparent 62%);
+}
+
+.app-shell[data-theme='light'] .course-card {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(71, 85, 105, 0.035), transparent 64%);
+}
+
+.app-shell[data-theme='dark'] .course-card:hover,
+.app-shell[data-theme='dark'] .course-card.selected,
+.app-shell[data-theme='dark'] .course-card:focus-within {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.05), transparent 62%);
+}
+
+.app-shell[data-theme='light'] .course-card:hover,
+.app-shell[data-theme='light'] .course-card.selected,
+.app-shell[data-theme='light'] .course-card:focus-within {
+  background-image: radial-gradient(ellipse at 100% 0%, rgba(71, 85, 105, 0.04), transparent 64%);
+}

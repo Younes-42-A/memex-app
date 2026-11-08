@@ -4,6 +4,7 @@ import moonIcon from './assets/moon.png'
 import notificationIcon from './assets/notification-bell.png'
 import uploadIcon from './assets/upload.png'
 import graduationCapIcon from './assets/graduation-cap.png'
+import profileIcon from './assets/profile.png'
 import {
   deleteCourseAndUnassignFiles,
   deleteFile as deleteStoredFile,
@@ -60,6 +61,8 @@ function App() {
   const [courses, setCourses] = useState<Course[]>([])
   const [files, setFiles] = useState<StudyFile[]>([])
   const [workspaceLoaded, setWorkspaceLoaded] = useState(false)
+  const [workspaceLoadError, setWorkspaceLoadError] = useState(false)
+  const [workspaceLoadAttempt, setWorkspaceLoadAttempt] = useState(0)
   const [selectedCourseCode, setSelectedCourseCode] = useState<string | null>(null)
   const [courseFormOpen, setCourseFormOpen] = useState(false)
   const [courseForm, setCourseForm] = useState(emptyCourseForm)
@@ -184,6 +187,8 @@ function App() {
 
   useEffect(() => {
     let cancelled = false
+    setWorkspaceLoaded(false)
+    setWorkspaceLoadError(false)
     loadWorkspace()
       .then((workspace) => {
         if (cancelled) return
@@ -208,6 +213,7 @@ function App() {
       })
       .catch((error: unknown) => {
         if (cancelled) return
+        setWorkspaceLoadError(true)
         setStatus(`Saved courses and files could not be loaded: ${error instanceof Error ? error.message : 'Unknown storage error.'}`)
         setWorkspaceLoaded(true)
       })
@@ -215,7 +221,7 @@ function App() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [workspaceLoadAttempt])
 
   useEffect(() => {
     if (!profilePopoverOpen) return
@@ -370,6 +376,17 @@ function App() {
     }
   }
 
+  function openCourseCreation() {
+    setCourseFormOpen(true)
+    window.location.hash = 'courses'
+  }
+
+  function openFilePicker() {
+    if (!workspaceLoaded || workspaceLoadError || storageRemaining === 0) return
+    setSelectedCourseCode(null)
+    fileInputRef.current?.click()
+  }
+
   async function handleRemoveFile(file: StudyFile) {
     try {
       await deleteStoredFile(file.id)
@@ -437,6 +454,7 @@ function App() {
       data-density={preferences.density}
       data-reduce-motion={preferences.reduceMotion}
       data-theme={preferences.theme}
+      data-page={activeSection}
       lang={preferences.language}
       dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}
     >
@@ -457,7 +475,11 @@ function App() {
             href="#dashboard"
             aria-current={activeSection === 'dashboard' ? 'page' : undefined}
           >
-            <span className="nav-icon" aria-hidden="true">⌂</span>
+            <span className="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z" />
+              </svg>
+            </span>
             {text.overview}
           </a>
           <a
@@ -476,10 +498,7 @@ function App() {
             aria-current={activeSection === 'profile' ? 'page' : undefined}
           >
             <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M2.25 12s3.55-6.25 9.75-6.25S21.75 12 21.75 12s-3.55 6.25-9.75 6.25S2.25 12 2.25 12Z" />
-                <circle cx="12" cy="12" r="2.75" />
-              </svg>
+              <img src={profileIcon} alt="" />
             </span>
             {text.profile}
           </a>
@@ -716,29 +735,33 @@ function App() {
             type="file"
             multiple
             aria-label={text.chooseFiles}
+            disabled={!workspaceLoaded || workspaceLoadError || storageRemaining === 0}
             onChange={handleUpload}
           />
         </header>
         {activeSection === 'dashboard' && (
           <div className="topbar-secondary-row has-welcome">
             <section className="topbar-welcome" aria-labelledby="welcome-title" dir={preferences.language === 'ar' ? 'rtl' : 'ltr'}>
-              <h1 id="welcome-title">{getGreeting(now, preferences.language)}, {username} <span aria-hidden="true">👋</span></h1>
+              <h1 id="welcome-title">{getGreeting(now, preferences.language)}</h1>
               <p className="welcome-copy">{text.buildSpace}</p>
             </section>
             <div className="topbar-actions">
-              <a
+              <button
                 className="primary-button topbar-button"
-                href="#courses"
+                type="button"
+                onClick={openCourseCreation}
               >
-                <span aria-hidden="true">+</span> Add course
-              </a>
-              <a
+                <span aria-hidden="true">+</span> {text.addCourse}
+              </button>
+              <button
                 className="secondary-button topbar-button"
-                href="#files"
+                type="button"
+                disabled={!workspaceLoaded || workspaceLoadError || storageRemaining === 0}
+                onClick={openFilePicker}
               >
                 <img className="topbar-action-image" src={uploadIcon} alt="" />
-                Upload files
-              </a>
+                {text.uploadFiles}
+              </button>
             </div>
           </div>
         )}
@@ -746,13 +769,21 @@ function App() {
         {activeSection === 'dashboard' && (
           <Dashboard
             text={text}
-            courses={courses.length}
-            files={files.length}
-            visibleFiles={visibleFiles.length}
-            selectedCourseCode={selectedCourseCode}
+            language={preferences.language}
+            courses={courses}
+            files={files}
             storageUsed={formatSize(storageUsed)}
-            storageRemaining={formatSize(storageRemaining)}
             storagePercent={storagePercent}
+            workspaceLoaded={workspaceLoaded}
+            workspaceLoadError={workspaceLoadError}
+            canUploadFiles={workspaceLoaded && !workspaceLoadError && storageRemaining > 0}
+            onAddCourse={openCourseCreation}
+            onUploadFiles={openFilePicker}
+            onSelectCourse={(courseCode) => {
+              setSelectedCourseCode(courseCode)
+              window.location.hash = 'files'
+            }}
+            onRetryLoad={() => setWorkspaceLoadAttempt((attempt) => attempt + 1)}
           />
         )}
 
@@ -815,6 +846,7 @@ function App() {
             files={files}
             selectedCourseCode={selectedCourseCode}
             workspaceLoaded={workspaceLoaded}
+            workspaceLoadError={workspaceLoadError}
             courseFormOpen={courseFormOpen}
             courseForm={courseForm}
             onToggleForm={() => setCourseFormOpen((open) => !open)}
@@ -825,6 +857,7 @@ function App() {
               window.location.hash = 'files'
             }}
             onRemoveCourse={handleRemoveCourse}
+            onRetryLoad={() => setWorkspaceLoadAttempt((attempt) => attempt + 1)}
           />
         )}
 
@@ -833,6 +866,7 @@ function App() {
             text={text}
             selectedCourseCode={selectedCourseCode}
             workspaceLoaded={workspaceLoaded}
+            workspaceLoadError={workspaceLoadError}
             storageRemaining={storageRemaining}
             storageRemainingLabel={formatSize(storageRemaining)}
             storageUsedLabel={formatSize(storageUsed)}
@@ -842,6 +876,7 @@ function App() {
             onShowAll={() => setSelectedCourseCode(null)}
             onChooseFiles={() => fileInputRef.current?.click()}
             onRemoveFile={handleRemoveFile}
+            onRetryLoad={() => setWorkspaceLoadAttempt((attempt) => attempt + 1)}
           />
         )}
 
@@ -886,7 +921,7 @@ function App() {
           />
         )}
 
-        {preferences.showNotifications && <p className="status-message" aria-live="polite">{status}</p>}
+        {preferences.showNotifications && <p className="status-message" role="status" aria-live="polite">{status}</p>}
         {chatSettingsOpen && (
           <ChatSettingsModal
             open={chatSettingsOpen}

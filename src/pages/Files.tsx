@@ -7,6 +7,7 @@ type FilesProps = {
   text: typeof interfaceText.en
   selectedCourseCode: string | null
   workspaceLoaded: boolean
+  workspaceLoadError: boolean
   storageRemaining: number
   storageRemainingLabel: string
   storageUsedLabel: string
@@ -16,12 +17,14 @@ type FilesProps = {
   onShowAll: () => void
   onChooseFiles: () => void
   onRemoveFile: (file: StudyFile) => void
+  onRetryLoad: () => void
 }
 
 export default function Files({
   text,
   selectedCourseCode,
   workspaceLoaded,
+  workspaceLoadError,
   storageRemaining,
   storageRemainingLabel,
   storageUsedLabel,
@@ -31,6 +34,7 @@ export default function Files({
   onShowAll,
   onChooseFiles,
   onRemoveFile,
+  onRetryLoad,
 }: FilesProps) {
   return (
     <section className="content-section files-section" aria-labelledby="files-title">
@@ -45,7 +49,7 @@ export default function Files({
               {text.showAll}
             </button>
           )}
-          <button className="primary-button" type="button" disabled={!workspaceLoaded || storageRemaining === 0} onClick={onChooseFiles}>
+          <button className="primary-button" type="button" disabled={!workspaceLoaded || workspaceLoadError || storageRemaining === 0} onClick={onChooseFiles}>
             {text.addFiles}
           </button>
         </div>
@@ -68,7 +72,15 @@ export default function Files({
         </div>
       </div>
 
-      {visibleFiles.length > 0 ? (
+      {workspaceLoadError ? (
+        <div className="empty-state workspace-error-state" role="alert">
+          <strong>{text.workspaceLoadError}</strong>
+          <p>{text.savedDataUnavailable}</p>
+          <button className="secondary-button" type="button" onClick={onRetryLoad}>{text.retry}</button>
+        </div>
+      ) : !workspaceLoaded ? (
+        <div className="empty-state" role="status"><strong>{text.loading}</strong></div>
+      ) : visibleFiles.length > 0 ? (
         <div className="file-list" role="list">
           {visibleFiles.map((studyFile) => {
             const course = courses.find((item) => item.code === studyFile.courseCode)
