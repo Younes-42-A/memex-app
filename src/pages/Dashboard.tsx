@@ -89,7 +89,7 @@ export default function Dashboard({
             <p>{text.storage}</p>
             <div className="storage-value">
               <strong>{workspaceLoaded && !workspaceLoadError ? storageUsed : '—'}</strong>
-              <small>/ 5 GB</small>
+              <small>/ 1 GB</small>
             </div>
             <div
               className="storage-progress"

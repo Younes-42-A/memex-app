@@ -43,7 +43,7 @@ import { readSavedProfile } from './storage/profile'
 const emptyCourseForm: CourseForm = { code: '', title: '', instructor: '' }
 const courseColors: Course['color'][] = ['blue', 'purple', 'green']
 const username = 'Younes'
-const storageLimit = 5 * 1024 ** 3
+const storageLimit = 1 * 1024 ** 3
 
 function toAnswerStyle(value: string): AnswerStyle {
   return value === 'concise' || value === 'step-by-step' ? value : 'balanced'
@@ -336,7 +336,7 @@ function App() {
     const input = event.currentTarget
     const batchSize = selectedFiles.reduce((size, file) => size + file.size, 0)
     if (storageUsed + pendingUploadBytes.current + batchSize > storageLimit) {
-      setStatus(`Not enough storage. You have ${formatSize(storageRemaining)} remaining out of 5 GB.`)
+      setStatus(`Not enough storage. You have ${formatSize(storageRemaining)} remaining out of 1 GB.`)
       input.value = ''
       return
     }
@@ -367,7 +367,7 @@ function App() {
         return { id, file, courseCode, url, uploadedAt: date }
       })
       setFiles((current) => [...uploadedFiles, ...current])
-      setStatus(`${uploadedFiles.length} file${uploadedFiles.length === 1 ? '' : 's'} saved. ${formatSize(storageLimit - storageUsed - batchSize)} of 5 GB remaining.`)
+      setStatus(`${uploadedFiles.length} file${uploadedFiles.length === 1 ? '' : 's'} saved. ${formatSize(storageLimit - storageUsed - batchSize)} of 1 GB remaining.`)
     } catch (error) {
       setStatus(`Files could not be saved: ${error instanceof Error ? error.message : 'Unknown storage error.'}`)
     } finally {
@@ -488,7 +488,9 @@ function App() {
             aria-current={activeSection === 'feed' || activeSection === 'repository-create' || activeSection === 'repository-files' ? 'page' : undefined}
           >
             <span className="nav-icon" aria-hidden="true">
-              <i className="fa-solid fa-rss"></i>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 19h.01M5 12a7 7 0 0 1 7 7M5 5a14 14 0 0 1 14 14" />
+              </svg>
             </span>
             Feed
           </a>
