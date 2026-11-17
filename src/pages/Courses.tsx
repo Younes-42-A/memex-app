@@ -2,6 +2,7 @@
 import type { FormEvent } from 'react'
 import type { interfaceText } from '../i18n'
 import type { Course, CourseForm } from '../types'
+import graduationCapIcon from '../assets/graduation-cap.png'
 
 type CoursesProps = {
   text: typeof interfaceText.en
@@ -128,7 +129,12 @@ export default function Courses({
           })}
         </div>
       ) : (
-        <div className="empty-state">
+        <div className="empty-state course-empty-state">
+          <img
+            className="course-empty-icon"
+            src={graduationCapIcon}
+            alt=""
+          />
           <strong>{text.noCourses}</strong>
           <p>{text.addCourseHelp}</p>
         </div>

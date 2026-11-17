@@ -8,6 +8,7 @@ import profileIcon from './assets/profile.png'
 import {
   deleteCourseAndUnassignFiles,
   deleteFile as deleteStoredFile,
+  assignFileToCourse,
   loadWorkspace,
   saveCourse,
   saveFiles,
@@ -398,6 +399,23 @@ function App() {
     fileUrls.current.delete(file.url)
     setFiles((current) => current.filter((item) => item.id !== file.id))
     setStatus(`${file.file.name} was removed.`)
+  }
+
+  async function handleAssignFileCourse(file: StudyFile, courseCode: string) {
+    try {
+      await assignFileToCourse(file.id, courseCode)
+    } catch (error) {
+      setStatus(`File could not be assigned: ${error instanceof Error ? error.message : 'Unknown storage error.'}`)
+      return
+    }
+
+    setFiles((current) => current.map((item) => (
+      item.id === file.id ? { ...item, courseCode } : item
+    )))
+    const course = courses.find((item) => item.code === courseCode)
+    setStatus(course
+      ? `${file.file.name} was assigned to ${course.title}.`
+      : `${file.file.name} is now unassigned.`)
   }
 
   async function handleRemoveCourse(course: Course) {
@@ -877,6 +895,7 @@ function App() {
             visibleFiles={visibleFiles}
             onShowAll={() => setSelectedCourseCode(null)}
             onChooseFiles={() => fileInputRef.current?.click()}
+            onAssignCourse={handleAssignFileCourse}
             onRemoveFile={handleRemoveFile}
             onRetryLoad={() => setWorkspaceLoadAttempt((attempt) => attempt + 1)}
           />

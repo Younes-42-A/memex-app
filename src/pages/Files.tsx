@@ -2,6 +2,7 @@
 import type { interfaceText } from '../i18n'
 import type { Course, StudyFile } from '../types'
 import { formatSize } from '../utils/format'
+import recentFiles from '../assets/recent-files.png'
 
 type FilesProps = {
   text: typeof interfaceText.en
@@ -16,6 +17,7 @@ type FilesProps = {
   visibleFiles: StudyFile[]
   onShowAll: () => void
   onChooseFiles: () => void
+  onAssignCourse: (file: StudyFile, courseCode: string) => void
   onRemoveFile: (file: StudyFile) => void
   onRetryLoad: () => void
 }
@@ -33,6 +35,7 @@ export default function Files({
   visibleFiles,
   onShowAll,
   onChooseFiles,
+  onAssignCourse,
   onRemoveFile,
   onRetryLoad,
 }: FilesProps) {
@@ -83,7 +86,6 @@ export default function Files({
       ) : visibleFiles.length > 0 ? (
         <div className="file-list" role="list">
           {visibleFiles.map((studyFile) => {
-            const course = courses.find((item) => item.code === studyFile.courseCode)
             const extension = studyFile.file.name.includes('.')
               ? studyFile.file.name.split('.').pop()?.slice(0, 4).toUpperCase() ?? 'FILE'
               : 'FILE'
@@ -94,7 +96,21 @@ export default function Files({
                   <a href={studyFile.url} target="_blank" rel="noreferrer">
                     {studyFile.file.name}
                   </a>
-                  <span>{course?.title ?? 'No course selected'}</span>
+                  <label className="file-course-picker">
+                    <span className="visually-hidden">{text.course}</span>
+                    <select
+                      className={!studyFile.courseCode ? 'unassigned' : ''}
+                      value={studyFile.courseCode}
+                      onChange={(event) => onAssignCourse(studyFile, event.target.value)}
+                    >
+                      <option value="">{text.noCourseAssociated}</option>
+                      {courses.map((item) => (
+                        <option value={item.code} key={item.code}>
+                          {item.title}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                 </div>
                 <time className="file-date" dateTime={studyFile.uploadedAt.toISOString()}>
                   {studyFile.uploadedAt.toLocaleString()}
@@ -114,6 +130,11 @@ export default function Files({
         </div>
       ) : (
         <div className="empty-state">
+          <img
+            className="course-empty-icon"
+            src={recentFiles}
+            alt=""
+          />
           <strong>{text.noFiles}</strong>
           <p>{text.addFilesHelp}</p>
         </div>

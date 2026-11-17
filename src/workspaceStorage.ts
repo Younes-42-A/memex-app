@@ -161,6 +161,20 @@ export async function saveFiles(files: StoredFile[]) {
   await completed
 }
 
+export async function assignFileToCourse(id: string, courseCode: string) {
+  const database = await openDatabase()
+  const transaction = database.transaction('files', 'readwrite')
+  const completed = transactionComplete(transaction)
+  const store = transaction.objectStore('files')
+  const request = store.get(id) as IDBRequest<StoredFile | undefined>
+
+  request.addEventListener('success', () => {
+    if (request.result) store.put({ ...request.result, courseCode })
+  }, { once: true })
+
+  await completed
+}
+
 export async function deleteFile(id: string) {
   const database = await openDatabase()
   const transaction = database.transaction('files', 'readwrite')
