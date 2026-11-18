@@ -93,7 +93,7 @@ export default function Files({
               <article className="file-row" key={studyFile.id} role="listitem">
                 <span className="file-type" aria-hidden="true">{extension}</span>
                 <div className="file-name">
-                  <a href={studyFile.url} target="_blank" rel="noreferrer">
+                  <a href={studyFile.url} target="_blank" rel="noreferrer" className="file-row-link">
                     {studyFile.file.name}
                   </a>
                   <label className="file-course-picker">
@@ -131,7 +131,7 @@ export default function Files({
       ) : (
         <div className="empty-state">
           <img
-            className="course-empty-icon"
+            className="files-empty-icon"
             src={recentFiles}
             alt=""
           />

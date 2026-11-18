@@ -263,8 +263,19 @@
   align-items: center;
   gap: 13px;
   padding: 10px 18px;
+  position: relative;  
+  cursor: pointer;
 }
-
+.file-row-link::after {
+  content: "";
+  position: absolute;
+  inset: 0; 
+  z-index: 1;
+}
+.file-course-picker {
+  position: relative;
+  z-index: 2;
+}
 .file-row + .file-row {
   border-top: 1px solid var(--line);
 }
@@ -442,4 +453,11 @@
 .app-shell[data-theme='light'] .storage-summary,
 .app-shell[data-theme='light'] .file-list {
   background-image: radial-gradient(ellipse at 100% 0%, rgba(71, 85, 105, 0.03), transparent 66%);
+}
+.files-empty-icon {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(255, 138, 0, 0.16));
 }
